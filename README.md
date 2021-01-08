@@ -3,3 +3,4 @@
 Web que reune mascotas perdidas con sus dueños
 
 ## Diseño
+![Diseño](diagramas.svg)
