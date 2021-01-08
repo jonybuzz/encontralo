@@ -4,4 +4,4 @@ Web que reune mascotas perdidas con sus dueños
 
 ## Diseño
 ![Diseño](diagramas.svg)
-[Editar](https://github.com/jonybuzz/encontralo/edit-diagram.html?repo=encontralo&path=diagramas.svg)
+[Editar](http://jgraph.github.io/drawio-github/edit-diagram.html?repo=encontralo&path=diagramas.svg)
