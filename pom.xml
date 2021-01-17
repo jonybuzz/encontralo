@@ -60,8 +60,8 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.mariadb</groupId>
-            <artifactId>r2dbc-mariadb</artifactId>
+            <groupId>io.r2dbc</groupId>
+            <artifactId>r2dbc-h2</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -91,11 +91,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.5</version>
-                <configuration>
-                    <output>file</output>
-                    <append>true</append>
-                </configuration>
+                <version>0.8.6</version>
                 <executions>
                     <execution>
                         <id>jacoco-initialize</id>
@@ -103,8 +99,18 @@
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
-                    <!--Test coverage while compiling -->
                     <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>coverage-while-compiling</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
                         <configuration>
                             <rules>
                                 <rule>
@@ -134,53 +140,42 @@
                                 </rule>
                             </rules>
                         </configuration>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
                     </execution>
                 </executions>
             </plugin>
 
-            <!-- Check checkstyle while compiling -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>3.1.1</version>
                 <executions>
                     <execution>
-                        <id>validate</id>
+                        <id>checkstyle-while-compiling</id>
                         <phase>validate</phase>
-<!--                        <configuration>
-                            <configLocation>${maven.reportes.config.dir}/checkstyle_rules.xml</configLocation>
-                        </configuration>-->
-                        <configuration>
-                            <configLocation>google_checks.xml</configLocation>
-                        </configuration>
                         <goals>
                             <goal>check</goal>
                         </goals>
+                        <configuration>
+                            <configLocation>google_checks.xml</configLocation>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
 
-            <!--Check pmd while compiling-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.13.0</version>
+                <version>3.14.0</version>
                 <executions>
                     <execution>
-                        <id>validate</id>
+                        <id>pmd-while-compiling</id>
                         <phase>validate</phase>
-                        <configuration>
-                            <printFailingErrors>true</printFailingErrors>
-<!--                            <rulesets>
-                                <ruleset>${maven.reportes.config.dir}/pmd_rules.xml</ruleset>
-                            </rulesets>-->
-                        </configuration>
                         <goals>
                             <goal>check</goal>
                         </goals>
+                        <configuration>
+                            <printFailingErrors>true</printFailingErrors>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -197,7 +192,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.1.1</version>
                 <configuration>
                     <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
                 </configuration>
@@ -217,10 +212,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.1.0</version>
-<!--                <configuration>
-                    <configLocation>src/main/reportes/checkstyle_rules.xml</configLocation>
-                </configuration>-->
+                <version>3.1.1</version>
                 <configuration>
                     <configLocation>google_checks.xml</configLocation>
                 </configuration>
@@ -235,18 +227,15 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.13.0</version>
+                <version>3.14.0</version>
                 <configuration>
                     <analysisCache>true</analysisCache>
-<!--                    <rulesets>
-                        <ruleset>src/main/reportes/pmd_rules.xml</ruleset>
-                    </rulesets>-->
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.5</version>
+                <version>0.8.6</version>
                 <reportSets>
                     <reportSet>
                         <reports>
