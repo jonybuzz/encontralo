@@ -40,10 +40,9 @@ jobs:
           languages: java
       
       - name: Build + Sonar
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=jonybuzz_encontralo -Dsonar.organization=jonybuzz -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
-      
       - name: Analisis CodeQL
         uses: github/codeql-action/analyze@v1
