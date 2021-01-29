@@ -1,0 +1,27 @@
+{
+  "cwd": "/Users/jonathan.buzzetti/Documents/Proyectos/encontralo/src/main/frontend",
+  "type": [
+    "pwa",
+    "web"
+  ],
+  "name": "Encontralo",
+  "framework": "vue",
+  "template": "single-view",
+  "cssPreProcessor": "scss",
+  "bundler": "webpack",
+  "webpack": {
+    "developmentSourceMap": true,
+    "productionSourceMap": true,
+    "hashAssets": false,
+    "preserveAssetsPaths": false,
+    "inlineAssets": true
+  },
+  "theming": {
+    "customColor": true,
+    "color": "#4c00ff",
+    "darkTheme": false,
+    "iconFonts": true,
+    "fillBars": false
+  },
+  "customBuild": false
+}
