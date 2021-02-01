@@ -1,6 +1,6 @@
 # encontralo.com.ar
 
-Web que reune mascotas perdidas con sus dueños. Roadmap: https://github.com/jonybuzz/encontralo/projects/1
+Web que reúne mascotas perdidas con sus dueños. Roadmap: https://github.com/jonybuzz/encontralo/projects/1
 
 ## Diseño
 

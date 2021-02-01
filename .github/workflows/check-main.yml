@@ -39,12 +39,13 @@ jobs:
       - name: Init CodeQL
         uses: github/codeql-action/init@v1
         with:
-          languages: java
-      
+          languages: java, javascript
+
       - name: Build + Sonar
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=jonybuzz_encontralo -Dsonar.organization=jonybuzz -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=encontralo -Dsonar.organization=jonybuzz -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
       - name: Analisis CodeQL
         uses: github/codeql-action/analyze@v1
