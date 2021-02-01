@@ -1,0 +1,34 @@
+name: Java CI with Maven
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/main/frontend/**.js'
+      - 'src/main/frontend/**.json'
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'src/main/frontend/**.js'
+      - 'src/main/frontend/**.json'
+jobs:
+  build:
+    name: Build y Analisis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Init CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: javascript
+          paths:
+            - 'src/main/frontend'
+
+      - name: Analisis CodeQL
+        uses: github/codeql-action/analyze@v1
