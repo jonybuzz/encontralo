@@ -8,6 +8,8 @@ Web que reúne mascotas perdidas con sus dueños. Roadmap: https://github.com/jo
 
 <a href="https://app.diagrams.net/#Hjonybuzz%2Fencontralo%2Fmain%2Fdocumentacion%2Fdiagrama-despliegue.svg" target="_blank">Editar en diagrams.net</a>
 
+<a href="https://app.diagrams.net/#Hjonybuzz%2Fencontralo%2Fmain%2Fdocumentacion%2Fdiagrama-clases.svg" target="_blank">Diagrama de clases</a>
+
 # Getting Started
 
 ### Reference Documentation
