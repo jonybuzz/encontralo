@@ -3,7 +3,6 @@ package com.jonybuzz.encontralo.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -11,14 +10,14 @@ import java.util.Set;
 public class Anuncio {
 
     @Id
-    @GeneratedValue
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private TipoPost tipo;
+    private TipoAnuncio tipo;
 
     private String nombreMascota;
 
-    private String nombreNormalizado;
+    private String nombreMascotaNormalizado;
 
     @ManyToOne
     private Especie especie;
@@ -32,7 +31,7 @@ public class Anuncio {
     @ManyToOne
     private FranjaEtaria franjaEtaria;
 
-    @OneToMany
+    @ManyToMany
     private Set<Color> colores;
 
     private Boolean tieneCollar;
@@ -41,9 +40,13 @@ public class Anuncio {
     private Pelaje pelaje;
 
     @OneToMany
-    private List<Imagen> fotos;
+    private Set<Imagen> fotos;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride( name = "lat", column = @Column(name = "ubicacion_lat")),
+            @AttributeOverride( name = "lon", column = @Column(name = "ubicacion_lon"))
+    })
     private Ubicacion ubicacion;
 
     private String comentario;

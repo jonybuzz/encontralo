@@ -1,6 +1,6 @@
 package com.jonybuzz.encontralo.model;
 
-public enum TipoPost {
+public enum TipoAnuncio {
 
     PERDIDO
 

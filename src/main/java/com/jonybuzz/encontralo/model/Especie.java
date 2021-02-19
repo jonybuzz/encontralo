@@ -1,18 +1,23 @@
 package com.jonybuzz.encontralo.model;
 
 import lombok.Data;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+
+import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Data
 public class Especie {
 
+    public Especie() {
+    }
+
+    public Especie(Integer id) {
+        this.id = id;
+    }
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String nombre;
