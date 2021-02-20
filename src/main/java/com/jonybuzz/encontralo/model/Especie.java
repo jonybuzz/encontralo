@@ -1,31 +1,28 @@
 package com.jonybuzz.encontralo.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import org.apache.commons.collections4.SetUtils;
 
-import javax.persistence.*;
 import java.util.Set;
 
-@Entity
 @Data
-public class Especie {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@NoArgsConstructor
+public class Especie implements IdEntity<Integer> {
 
-    public Especie() {
-    }
-
-    public Especie(Integer id) {
+    public Especie(Integer id, String nombre, Tamanio... tamanios) {
         this.id = id;
+        this.nombre = nombre;
+        this.tamanios = SetUtils.hashSet(tamanios);
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Integer id;
 
     private String nombre;
 
-    @OneToMany
-    private Set<Raza> razas;
-
-    @OneToMany
     private Set<Tamanio> tamanios;
 
 }

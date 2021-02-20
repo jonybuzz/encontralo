@@ -18,4 +18,5 @@ public class Imagen {
     private Integer posicion;
 
     private byte[] datos;
+
 }

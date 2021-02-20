@@ -19,34 +19,30 @@ public class Anuncio {
 
     private String nombreMascotaNormalizado;
 
-    @ManyToOne
-    private Especie especie;
+    private Integer especieId;
 
     @ManyToOne
     private Raza raza;
 
-    @ManyToOne
-    private Tamanio tamanio;
+    private Integer tamanioId;
 
-    @ManyToOne
-    private FranjaEtaria franjaEtaria;
+    private Integer franjaEtariaId;
 
     @ManyToMany
+    @JoinTable(name = "anuncio_colores")
     private Set<Color> colores;
 
     private Boolean tieneCollar;
 
-    @ManyToOne
-    private Pelaje pelaje;
+    private Integer pelajeId;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "anuncio_fotos")
     private Set<Imagen> fotos;
 
     @Embedded
-    @AttributeOverrides({
-            @AttributeOverride( name = "lat", column = @Column(name = "ubicacion_lat")),
-            @AttributeOverride( name = "lon", column = @Column(name = "ubicacion_lon"))
-    })
+    @AttributeOverride(name = "lat", column = @Column(name = "ubicacion_lat"))
+    @AttributeOverride(name = "lon", column = @Column(name = "ubicacion_lon"))
     private Ubicacion ubicacion;
 
     private String comentario;

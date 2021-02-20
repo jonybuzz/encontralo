@@ -8,8 +8,7 @@ CREATE TABLE raza (
   id INT AUTO_INCREMENT,
   nombre VARCHAR(64) NOT NULL,
   especie_id INT NOT NULL,
-  CONSTRAINT raza_pk PRIMARY KEY (id),
-  CONSTRAINT raza_especie_fk FOREIGN KEY (especie_id) REFERENCES especie(id)
+  CONSTRAINT raza_pk PRIMARY KEY (id)
 );
 
 CREATE TABLE tamanio (
@@ -56,26 +55,28 @@ CREATE TABLE anuncio (
   comentario VARCHAR,
   telefono_contacto VARCHAR(255),
   CONSTRAINT anuncio_pk PRIMARY KEY (id),
-  CONSTRAINT anuncio_especie_fk FOREIGN KEY (especie_id) REFERENCES especie(id),
-  CONSTRAINT anuncio_raza_fk FOREIGN KEY (raza_id) REFERENCES raza(id),
-  CONSTRAINT anuncio_tamanio_fk FOREIGN KEY (tamanio_id) REFERENCES tamanio(id),
-  CONSTRAINT anuncio_franja_etaria_fk FOREIGN KEY (franja_etaria_id) REFERENCES franja_etaria(id),
-  CONSTRAINT anuncio_pelaje_fk FOREIGN KEY (pelaje_id) REFERENCES pelaje(id)
+  CONSTRAINT anuncio_raza_fk FOREIGN KEY (raza_id) REFERENCES raza(id)
 );
 
 CREATE TABLE imagen (
   id INT AUTO_INCREMENT,
   posicion INT NOT NULL,
   datos MEDIUMBLOB NOT NULL,
-  anuncio_id INT NOT NULL,
-  CONSTRAINT imagen_pk PRIMARY KEY (id),
-  CONSTRAINT imagen_anuncio_fk FOREIGN KEY (anuncio_id) REFERENCES anuncio(id)
+  CONSTRAINT imagen_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE color_x_anuncio (
-  color_id INT NOT NULL,
+CREATE TABLE anuncio_fotos (
+  fotos_id INT NOT NULL,
   anuncio_id INT NOT NULL,
-  CONSTRAINT color_x_anuncio_pk PRIMARY KEY (color_id, anuncio_id),
-  CONSTRAINT color_x_anuncio_fk1 FOREIGN KEY (anuncio_id) REFERENCES anuncio(id),
-  CONSTRAINT color_x_anuncio_fk2 FOREIGN KEY (color_id) REFERENCES color(id)
+  CONSTRAINT anuncio_fotos_pk PRIMARY KEY (fotos_id, anuncio_id),
+  CONSTRAINT anuncio_fotos_fk1 FOREIGN KEY (fotos_id) REFERENCES imagen(id),
+  CONSTRAINT anuncio_fotos_fk2 FOREIGN KEY (anuncio_id) REFERENCES anuncio(id)
+);
+
+CREATE TABLE anuncio_colores (
+  colores_id INT NOT NULL,
+  anuncio_id INT NOT NULL,
+  CONSTRAINT anuncio_colores_pk PRIMARY KEY (colores_id, anuncio_id),
+  CONSTRAINT anuncio_colores_fk1 FOREIGN KEY (anuncio_id) REFERENCES anuncio(id),
+  CONSTRAINT anuncio_colores_fk2 FOREIGN KEY (colores_id) REFERENCES color(id)
 );
