@@ -85,6 +85,11 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.somospnt</groupId>
+            <artifactId>test-utils</artifactId>
+            <version>1.4.0</version>
+        </dependency>
     </dependencies>
 
     <build>

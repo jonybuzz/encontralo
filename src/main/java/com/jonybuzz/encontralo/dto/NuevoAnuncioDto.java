@@ -16,7 +16,6 @@ import java.util.Set;
 @AllArgsConstructor
 public class NuevoAnuncioDto {
 
-    @NotNull
     private TipoAnuncio tipo;
 
     private String nombreMascota;
@@ -35,7 +34,7 @@ public class NuevoAnuncioDto {
 
     private Integer pelajeId;
 
-    private Set<ImagenDto> fotos;
+    private Set<ImagenUploadDto> fotos;
 
     private Ubicacion ubicacion;
 

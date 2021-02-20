@@ -12,7 +12,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ImagenDto {
+public class ImagenUploadDto {
 
     private Integer posicion;
     private String datosBase64;
