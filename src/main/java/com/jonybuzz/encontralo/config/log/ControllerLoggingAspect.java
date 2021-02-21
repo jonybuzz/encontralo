@@ -6,7 +6,6 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,8 +24,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * SecurityContextHolder.getContext().getAuthentication().getName()
  * </pre>
  *
- * @see
- * <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#aop">Spring
+ * @see <a href="https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#aop">Spring
  * AOP</a>
  */
 @Aspect
@@ -34,7 +32,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @Slf4j
 public class ControllerLoggingAspect {
 
-    @Before("within(com.saenz.*.controller..*)")
+    @Before("within(com.jonybuzz.*.controller..*)")
     public void loggearInputDeController(JoinPoint joinPoint) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (log.isInfoEnabled()) {
@@ -52,7 +50,7 @@ public class ControllerLoggingAspect {
         }
     }
 
-    @AfterReturning(pointcut = "within(com.saenz.*.controller.rest..*)", returning = "resultado")
+    @AfterReturning(pointcut = "within(com.jonybuzz.*.controller.rest..*)", returning = "resultado")
     public void loggearEjecucionDeController(JoinPoint joinPoint, Object resultado) {
         if (log.isInfoEnabled()) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -69,30 +67,7 @@ public class ControllerLoggingAspect {
         }
     }
 
-    @Pointcut("execution(* com.saenz.*.repository.NextCloudRepository.*(..))")
-    public void metodosNextcloudRepository() {
-    }
-
-    @Before("metodosNextcloudRepository()")
-    public void loggearEjecucionDeNextcloudRepository(JoinPoint joinPoint) {
-        if (log.isDebugEnabled()) {
-            log.debug("[Nextcloud] {} Parametros: {}",
-                    joinPoint.getSignature().toShortString(),
-                    joinPoint.getArgs());
-        }
-    }
-
-    @AfterReturning(pointcut = "metodosNextcloudRepository()", returning = "resultado")
-    public void loggearEjecucionDeNextcloudRepository(JoinPoint joinPoint, Object resultado) {
-        if (log.isDebugEnabled()) {
-            log.debug("[Nextcloud] {} Parametros: {}, Resultado: {}",
-                    joinPoint.getSignature().toShortString(),
-                    joinPoint.getArgs(),
-                    resultado);
-        }
-    }
-
-    @AfterThrowing(pointcut = "within(com.saenz.*.service..*)", throwing = "exception")
+    @AfterThrowing(pointcut = "within(com.jonybuzz.*.service..*)", throwing = "exception")
     public void loggearExcepcionesDeService(Exception exception) {
         log.debug("[Service Error]", exception);
     }

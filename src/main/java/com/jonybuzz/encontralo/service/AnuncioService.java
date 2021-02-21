@@ -6,7 +6,13 @@ import com.jonybuzz.encontralo.dto.ImagenUploadDto;
 import com.jonybuzz.encontralo.dto.NuevoAnuncioDto;
 import com.jonybuzz.encontralo.model.Anuncio;
 import com.jonybuzz.encontralo.model.FiltroAnuncios;
-import com.jonybuzz.encontralo.repository.*;
+import com.jonybuzz.encontralo.repository.AnuncioRepository;
+import com.jonybuzz.encontralo.repository.ColorRepository;
+import com.jonybuzz.encontralo.repository.EspecieRepository;
+import com.jonybuzz.encontralo.repository.RazaRepository;
+import com.jonybuzz.encontralo.repository.TamanioRepository;
+import com.jonybuzz.encontralo.repository.FranjaEtariaRepository;
+import com.jonybuzz.encontralo.repository.PelajeRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -17,7 +23,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.Collections.EMPTY_SET;
+import static java.util.Collections.emptySet;
 
 @Service
 public class AnuncioService {
@@ -86,10 +92,10 @@ public class AnuncioService {
                 .raza(anuncio.getRaza())
                 .tamanio(tamanioRepository.getOne(anuncio.getTamanioId()))
                 .franjaEtaria(franjaEtariaRepository.getOne(anuncio.getFranjaEtariaId()))
-                .colores(anuncio.getColores() == null ? EMPTY_SET : anuncio.getColores())
+                .colores(anuncio.getColores() == null ? emptySet() : anuncio.getColores())
                 .tieneCollar(anuncio.getTieneCollar())
                 .pelaje(pelajeRepository.getOne(anuncio.getPelajeId()))
-                .fotos(anuncio.getFotos() == null ? EMPTY_SET : anuncio.getFotos().stream()
+                .fotos(anuncio.getFotos() == null ? emptySet() : anuncio.getFotos().stream()
                         .map(foto -> ImagenDownloadDto.builder()
                                 .posicion(foto.getPosicion())
                                 .url("/recursos/imagenes/" + foto.getId())

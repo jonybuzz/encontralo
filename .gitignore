@@ -34,6 +34,4 @@ build/
 
 ### Node local instalado por Maven
 /src/main/frontend/node/
-/src/main/resources/
-
-/src/main/frontend/node/
+/src/main/resources/static

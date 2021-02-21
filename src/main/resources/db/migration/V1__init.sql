@@ -1,28 +1,8 @@
-CREATE TABLE especie (
-  id INT AUTO_INCREMENT,
-  nombre VARCHAR(64) NOT NULL,
-  CONSTRAINT especie_pk PRIMARY KEY (id)
-);
-
 CREATE TABLE raza (
   id INT AUTO_INCREMENT,
   nombre VARCHAR(64) NOT NULL,
   especie_id INT NOT NULL,
   CONSTRAINT raza_pk PRIMARY KEY (id)
-);
-
-CREATE TABLE tamanio (
-  id INT AUTO_INCREMENT,
-  nombre VARCHAR(64) NOT NULL,
-  especie_id INT NOT NULL,
-  CONSTRAINT tamanio_pk PRIMARY KEY (id),
-  CONSTRAINT tamanio_especie_fk FOREIGN KEY (especie_id) REFERENCES especie(id)
-);
-
-CREATE TABLE franja_etaria (
-  id INT AUTO_INCREMENT,
-  nombre VARCHAR(64) NOT NULL,
-  CONSTRAINT franja_etaria_pk PRIMARY KEY (id)
 );
 
 CREATE TABLE color (
@@ -32,17 +12,18 @@ CREATE TABLE color (
   CONSTRAINT color_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE pelaje (
+CREATE TABLE imagen (
   id INT AUTO_INCREMENT,
-  nombre VARCHAR(64) NOT NULL,
-  CONSTRAINT pelaje_pk PRIMARY KEY (id)
+  posicion INT NOT NULL,
+  datos MEDIUMBLOB NOT NULL,
+  CONSTRAINT imagen_pk PRIMARY KEY (id)
 );
 
 CREATE TABLE anuncio (
   id INT AUTO_INCREMENT,
   tipo INT NOT NULL,
-  nombre_mascota VARCHAR(255),
-  nombre_mascota_normalizado VARCHAR(255),
+  nombre_mascota VARCHAR(100),
+  nombre_mascota_normalizado VARCHAR(100),
   especie_id INT,
   raza_id INT,
   tamanio_id INT,
@@ -52,17 +33,10 @@ CREATE TABLE anuncio (
   fotos_id INT,
   ubicacion_lat DOUBLE,
   ubicacion_lon DOUBLE,
-  comentario VARCHAR,
+  comentario VARCHAR(255),
   telefono_contacto VARCHAR(255),
   CONSTRAINT anuncio_pk PRIMARY KEY (id),
   CONSTRAINT anuncio_raza_fk FOREIGN KEY (raza_id) REFERENCES raza(id)
-);
-
-CREATE TABLE imagen (
-  id INT AUTO_INCREMENT,
-  posicion INT NOT NULL,
-  datos MEDIUMBLOB NOT NULL,
-  CONSTRAINT imagen_pk PRIMARY KEY (id)
 );
 
 CREATE TABLE anuncio_fotos (

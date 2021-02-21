@@ -3,7 +3,6 @@ package com.jonybuzz.encontralo.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity

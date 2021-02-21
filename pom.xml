@@ -150,18 +150,33 @@
                 <version>2.7</version>
                 <executions>
                     <execution>
+                        <id>insertar-frontend-precompilado-desa</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}/src/main/resources/static</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/src/main/frontend/www</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>insertar-frontend-compilado</id>
                         <phase>prepare-package</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
+                            <outputDirectory>${project.basedir}/target/classes/static</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${project.basedir}/src/main/frontend/www</directory>
                                 </resource>
                             </resources>
-                            <outputDirectory>${project.basedir}/target/classes/static</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>

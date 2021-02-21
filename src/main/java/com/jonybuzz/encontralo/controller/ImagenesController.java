@@ -17,7 +17,7 @@ public class ImagenesController {
     @Autowired
     private ImagenRepository imagenRepository;
 
-    @GetMapping(value = "/recursos/imagenes/{imagenId}")
+    @GetMapping(value = "/imagenes/{imagenId}")
     public HttpEntity<byte[]> descargarImagen(@PathVariable Long imagenId) {
 
         Imagen imagen = imagenRepository.findById(imagenId)
