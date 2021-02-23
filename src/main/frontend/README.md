@@ -1,5 +1,9 @@
-# Encontralo
+# Encontralo.com.ar - Frontend
 
+## Instalación
+- Primero tenés que instalar [NPM](https://www.npmjs.com/get-npm)
+- Luego, instalar la herramienta CLI de [Framework7](https://framework7.io): `npm install -g framework7-cli`
+- Para probarlo, iniciá el backend en http://localhost:8080 y ejecutá `npm install` y `npm run dev` en este directorio
 ## Framework7 CLI Options
 
 Framework7 app created with following options:
@@ -63,7 +67,6 @@ Or launch UI where you will be able to change icons and splash screens:
 ```
 framework7 assets --ui
 ```
-
 
 
 ## Documentation & Resources
