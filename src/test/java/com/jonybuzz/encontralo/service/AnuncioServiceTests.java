@@ -17,9 +17,12 @@ import org.springframework.test.jdbc.JdbcTestUtils;
 
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Set;
 
+import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
 
 class AnuncioServiceTests extends ApplicationTests {
 
@@ -38,14 +41,15 @@ class AnuncioServiceTests extends ApplicationTests {
     @Test
     void crearAnuncio_recibeAnuncioEstandar_persisteOkYDevuelveId() {
 
-        NuevoAnuncioDto nuevoAnuncioDto = nuevoAnuncioEstandar();
+        NuevoAnuncioDto nuevoAnuncioDto = nuevoAnuncioPerroPerdido();
+        //Ejecucion
         Long id = anuncioService.crearAnuncio(nuevoAnuncioDto);
         assertThat(JdbcTestUtils.countRowsInTable(jdbcTemplate, "anuncio")).isEqualTo(1);
         assertThat(id).isNotNull();
-        //Ejecucion
         var anuncioPersistido = anuncioRepository.getOne(id);
         assertThat(anuncioPersistido.getColores()).hasSize(2);
         assertThat(anuncioPersistido.getNombreMascotaNormalizado()).isEqualTo("SENOR ITATI");
+        assertThat(anuncioPersistido.getFechaCreacion()).isCloseTo(LocalDateTime.now(), within(5, SECONDS));
     }
 
     @Test
@@ -72,10 +76,10 @@ class AnuncioServiceTests extends ApplicationTests {
                 .containsExactly(Tuple.tuple(TipoAnuncio.PERDIDO, especiePerro));
         assertThat(paginaAnuncios.getContent().get(0).getFotos())
                 .extracting(ImagenDownloadDto::getPosicion, ImagenDownloadDto::getUrl)
-                .containsExactly(Tuple.tuple(fotoPerro.getPosicion(), "/recursos/imagenes/" + fotoPerro.getId()));
+                .containsExactly(Tuple.tuple(fotoPerro.getPosicion(), "/imagenes/" + fotoPerro.getId()));
     }
 
-    private NuevoAnuncioDto nuevoAnuncioEstandar() {
+    private NuevoAnuncioDto nuevoAnuncioPerroPerdido() {
         return NuevoAnuncioDto.builder()
                 .tipo(TipoAnuncio.PERDIDO)
                 .nombreMascota("Señor Itatí,,")

@@ -13,7 +13,7 @@ public class PelajeRepository extends InMemoryRepository<Pelaje, Integer> {
     protected final void init() {
         load(
                 new Pelaje(1, "Corto"),
-                new Pelaje(1, "Largo")
+                new Pelaje(2, "Largo")
         );
     }
 

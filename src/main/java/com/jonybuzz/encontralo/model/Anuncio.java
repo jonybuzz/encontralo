@@ -3,6 +3,7 @@ package com.jonybuzz.encontralo.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -48,5 +49,7 @@ public class Anuncio {
     private String comentario;
 
     private String telefonoContacto;
+
+    private LocalDateTime fechaCreacion;
 
 }

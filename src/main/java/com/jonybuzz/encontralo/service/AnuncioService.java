@@ -9,16 +9,20 @@ import com.jonybuzz.encontralo.model.FiltroAnuncios;
 import com.jonybuzz.encontralo.repository.AnuncioRepository;
 import com.jonybuzz.encontralo.repository.ColorRepository;
 import com.jonybuzz.encontralo.repository.EspecieRepository;
-import com.jonybuzz.encontralo.repository.RazaRepository;
-import com.jonybuzz.encontralo.repository.TamanioRepository;
 import com.jonybuzz.encontralo.repository.FranjaEtariaRepository;
 import com.jonybuzz.encontralo.repository.PelajeRepository;
+import com.jonybuzz.encontralo.repository.RazaRepository;
+import com.jonybuzz.encontralo.repository.TamanioRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +33,7 @@ import static java.util.Collections.emptySet;
 public class AnuncioService {
 
     public static final int PAGE_SIZE = 15;
+    public static final String PATH_DESCARGA_IMAGENES = "/imagenes/";
     @Autowired
     private AnuncioRepository anuncioRepository;
     @Autowired
@@ -63,6 +68,7 @@ public class AnuncioService {
         anuncio.setUbicacion(dto.getUbicacion());
         anuncio.setComentario(dto.getComentario());
         anuncio.setTelefonoContacto(dto.getTelefonoContacto());
+        anuncio.setFechaCreacion(LocalDateTime.now());
         return anuncioRepository.saveAndFlush(anuncio).getId();
     }
 
@@ -72,7 +78,7 @@ public class AnuncioService {
         anuncioBuscado.setTipo(filtro.getTipoAnuncio());
         anuncioBuscado.setEspecieId(filtro.getEspecieId());
         Page<Anuncio> pagina = anuncioRepository.findAll(
-                Example.of(anuncioBuscado, ExampleMatcher.matchingAll().withIgnoreNullValues()),
+                Example.of(anuncioBuscado),
                 PageRequest.of(filtro.getPagina() - 1, PAGE_SIZE));
         List<AnuncioDto> dtos = pagina.stream().map(this::anuncioToDto).collect(Collectors.toList());
         return new PageImpl<>(dtos, pagina.getPageable(), pagina.getTotalElements());
@@ -98,12 +104,13 @@ public class AnuncioService {
                 .fotos(anuncio.getFotos() == null ? emptySet() : anuncio.getFotos().stream()
                         .map(foto -> ImagenDownloadDto.builder()
                                 .posicion(foto.getPosicion())
-                                .url("/recursos/imagenes/" + foto.getId())
+                                .url(PATH_DESCARGA_IMAGENES + foto.getId())
                                 .build())
                         .collect(Collectors.toSet()))
                 .ubicacion(anuncio.getUbicacion())
                 .comentario(anuncio.getComentario())
                 .telefonoContacto(anuncio.getTelefonoContacto())
+                .fechaCreacion(anuncio.getFechaCreacion())
                 .build();
     }
 
