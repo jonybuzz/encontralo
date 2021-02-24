@@ -2,6 +2,8 @@
 
 Web que reúne mascotas perdidas con sus dueños. Roadmap: https://github.com/jonybuzz/encontralo/projects/1
 
+Si querés ayudarnos, ésta es la [guía para contribuir](CONTRIBUTING.md)
+
 ## Diseño
 
 ![Diseño](documentacion/diagrama-despliegue.svg)
