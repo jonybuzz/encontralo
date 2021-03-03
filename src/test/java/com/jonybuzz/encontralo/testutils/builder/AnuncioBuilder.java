@@ -33,7 +33,7 @@ public class AnuncioBuilder extends AbstractPersistenceBuilder<Anuncio> {
         builder.instance.setColores(Set.of(marron));
         builder.instance.setTieneCollar(true);
         builder.instance.setPelajeId(1);
-        builder.instance.setUbicacion(new Ubicacion(new BigDecimal("37.1234"), new BigDecimal("157.0001")));
+        builder.instance.setLocalidad(new Localidad(1, "Lanús", "Buenos Aires"));
         builder.instance.setComentario("Tiene una chapita con mi teléfono!");
         builder.instance.setTelefonoContacto("11-5678-0987");
         builder.instance.setFechaCreacion(LocalDateTime.of(2020, 1, 29, 12, 0));
@@ -59,7 +59,7 @@ public class AnuncioBuilder extends AbstractPersistenceBuilder<Anuncio> {
         builder.instance.setColores(Set.of(marron));
         builder.instance.setTieneCollar(true);
         builder.instance.setPelajeId(1);
-        builder.instance.setUbicacion(new Ubicacion(new BigDecimal("0.1234"), new BigDecimal("0.0001")));
+        builder.instance.setLocalidad(new Localidad(2, "Avellaneda", "Buenos Aires"));
         builder.instance.setComentario("Tiene un moño");
         builder.instance.setTelefonoContacto("11-0000-8888");
         builder.instance.setFechaCreacion(LocalDateTime.of(2020, 1, 29, 12, 0));

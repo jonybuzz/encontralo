@@ -41,10 +41,8 @@ public class Anuncio {
     @JoinTable(name = "anuncio_fotos")
     private Set<Imagen> fotos;
 
-    @Embedded
-    @AttributeOverride(name = "lat", column = @Column(name = "ubicacion_lat"))
-    @AttributeOverride(name = "lon", column = @Column(name = "ubicacion_lon"))
-    private Ubicacion ubicacion;
+    @ManyToOne
+    private Localidad localidad;
 
     private String comentario;
 

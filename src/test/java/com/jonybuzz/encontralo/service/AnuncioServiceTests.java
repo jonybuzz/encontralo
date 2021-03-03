@@ -50,6 +50,7 @@ class AnuncioServiceTests extends ApplicationTests {
         assertThat(anuncioPersistido.getColores()).hasSize(2);
         assertThat(anuncioPersistido.getNombreMascotaNormalizado()).isEqualTo("SENOR ITATI");
         assertThat(anuncioPersistido.getFechaCreacion()).isCloseTo(LocalDateTime.now(), within(5, SECONDS));
+        assertThat(anuncioPersistido.getComentario()).isEqualTo("Tiene una chapita con mi teléfono! Revisar");
     }
 
     @Test
@@ -82,7 +83,7 @@ class AnuncioServiceTests extends ApplicationTests {
     private NuevoAnuncioDto nuevoAnuncioPerroPerdido() {
         return NuevoAnuncioDto.builder()
                 .tipo(TipoAnuncio.PERDIDO)
-                .nombreMascota("Señor Itatí,,")
+                .nombreMascota("Señor Itatí,, ")
                 .especieId(1)
                 .razaId(3)
                 .tamanioId(3)
@@ -98,8 +99,8 @@ class AnuncioServiceTests extends ApplicationTests {
                                 .posicion(2)
                                 .datosBase64("R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==")
                                 .build()))
-                .ubicacion(new Ubicacion(new BigDecimal("37.1234"), new BigDecimal("157.0001")))
-                .comentario("Tiene una chapita con mi teléfono!")
+                .localidadId(2)
+                .comentario(" Tiene una chapita con mi teléfono! \n\r Revisar")
                 .telefonoContacto("11-5678-0987")
                 .build();
     }

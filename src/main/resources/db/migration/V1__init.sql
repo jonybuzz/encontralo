@@ -19,6 +19,13 @@ CREATE TABLE imagen (
   CONSTRAINT imagen_pk PRIMARY KEY (id)
 );
 
+CREATE TABLE localidad (
+  id INT AUTO_INCREMENT,
+  nombre VARCHAR(64) NOT NULL,
+  provincia VARCHAR(64) NOT NULL,
+  CONSTRAINT localidad_pk PRIMARY KEY (id)
+);
+
 CREATE TABLE anuncio (
   id INT AUTO_INCREMENT,
   tipo INT NOT NULL,
@@ -31,13 +38,13 @@ CREATE TABLE anuncio (
   tiene_collar BOOLEAN,
   pelaje_id INT,
   fotos_id INT,
-  ubicacion_lat DOUBLE,
-  ubicacion_lon DOUBLE,
+  localidad_id INT,
   comentario VARCHAR(255),
   telefono_contacto VARCHAR(255),
   fecha_creacion DATETIME NOT NULL,
   CONSTRAINT anuncio_pk PRIMARY KEY (id),
-  CONSTRAINT anuncio_raza_fk FOREIGN KEY (raza_id) REFERENCES raza(id)
+  CONSTRAINT anuncio_raza_fk FOREIGN KEY (raza_id) REFERENCES raza(id),
+  CONSTRAINT anuncio_localidad_fk FOREIGN KEY (localidad_id) REFERENCES localidad(id)
 );
 
 CREATE TABLE anuncio_fotos (

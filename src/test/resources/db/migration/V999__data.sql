@@ -11,3 +11,9 @@ INSERT INTO color
 ( 2, 'Negro' , '0C0C0C'  ),
 ( 3, 'Blanco', 'FAFAFA'  ),
 ( 4, 'Marrón', '693B1F'  );
+
+INSERT INTO localidad
+(id, nombre      , provincia) VALUES
+( 1, 'Lanús'     , 'Buenos Aires'  ),
+( 2, 'Avellaneda', 'Buenos Aires'  ),
+( 3, 'Quilmes'   , 'Buenos Aires'  );

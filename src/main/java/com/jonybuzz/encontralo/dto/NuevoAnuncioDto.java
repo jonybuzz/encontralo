@@ -1,7 +1,6 @@
 package com.jonybuzz.encontralo.dto;
 
 import com.jonybuzz.encontralo.model.TipoAnuncio;
-import com.jonybuzz.encontralo.model.Ubicacion;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,7 +34,7 @@ public class NuevoAnuncioDto {
 
     private Set<ImagenUploadDto> fotos;
 
-    private Ubicacion ubicacion;
+    private Integer localidadId;
 
     private String comentario;
 

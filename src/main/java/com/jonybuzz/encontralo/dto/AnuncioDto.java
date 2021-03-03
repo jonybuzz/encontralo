@@ -3,11 +3,11 @@ package com.jonybuzz.encontralo.dto;
 import com.jonybuzz.encontralo.model.Color;
 import com.jonybuzz.encontralo.model.Especie;
 import com.jonybuzz.encontralo.model.FranjaEtaria;
+import com.jonybuzz.encontralo.model.Localidad;
 import com.jonybuzz.encontralo.model.Pelaje;
 import com.jonybuzz.encontralo.model.Raza;
 import com.jonybuzz.encontralo.model.Tamanio;
 import com.jonybuzz.encontralo.model.TipoAnuncio;
-import com.jonybuzz.encontralo.model.Ubicacion;
 import lombok.Builder;
 import lombok.Data;
 
@@ -40,7 +40,7 @@ public class AnuncioDto {
 
     private Set<ImagenDownloadDto> fotos;
 
-    private Ubicacion ubicacion;
+    private Localidad localidad;
 
     private String comentario;
 

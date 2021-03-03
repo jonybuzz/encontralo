@@ -10,6 +10,7 @@ import com.jonybuzz.encontralo.repository.AnuncioRepository;
 import com.jonybuzz.encontralo.repository.ColorRepository;
 import com.jonybuzz.encontralo.repository.EspecieRepository;
 import com.jonybuzz.encontralo.repository.FranjaEtariaRepository;
+import com.jonybuzz.encontralo.repository.LocalidadRepository;
 import com.jonybuzz.encontralo.repository.PelajeRepository;
 import com.jonybuzz.encontralo.repository.RazaRepository;
 import com.jonybuzz.encontralo.repository.TamanioRepository;
@@ -48,6 +49,8 @@ public class AnuncioService {
     private FranjaEtariaRepository franjaEtariaRepository;
     @Autowired
     private PelajeRepository pelajeRepository;
+    @Autowired
+    private LocalidadRepository localidadRepository;
 
     @Transactional
     public Long crearAnuncio(NuevoAnuncioDto dto) {
@@ -55,7 +58,7 @@ public class AnuncioService {
         Anuncio anuncio = new Anuncio();
         anuncio.setTipo(dto.getTipo());
         anuncio.setNombreMascota(dto.getNombreMascota());
-        anuncio.setNombreMascotaNormalizado(this.normalizar(dto.getNombreMascota()));
+        anuncio.setNombreMascotaNormalizado(this.normalizarNombre(dto.getNombreMascota()));
         anuncio.setEspecieId(dto.getEspecieId());
         anuncio.setRaza(razaRepository.getOne(dto.getRazaId()));
         anuncio.setTamanioId(dto.getTamanioId());
@@ -65,8 +68,8 @@ public class AnuncioService {
         anuncio.setPelajeId(dto.getPelajeId());
         anuncio.setFotos(dto.getFotos().stream()
                 .map(ImagenUploadDto::toImagen).collect(Collectors.toSet()));
-        anuncio.setUbicacion(dto.getUbicacion());
-        anuncio.setComentario(dto.getComentario());
+        anuncio.setLocalidad(localidadRepository.getOne(dto.getLocalidadId()));
+        anuncio.setComentario(StringUtils.normalizeSpace(dto.getComentario()));
         anuncio.setTelefonoContacto(dto.getTelefonoContacto());
         anuncio.setFechaCreacion(LocalDateTime.now());
         return anuncioRepository.saveAndFlush(anuncio).getId();
@@ -84,7 +87,7 @@ public class AnuncioService {
         return new PageImpl<>(dtos, pagina.getPageable(), pagina.getTotalElements());
     }
 
-    private String normalizar(String str) {
+    private String normalizarNombre(String str) {
         return StringUtils.stripAccents(StringUtils.normalizeSpace(str))
                 .toUpperCase().replaceAll("[^A-Z\\s]", "");
     }
@@ -107,7 +110,7 @@ public class AnuncioService {
                                 .url(PATH_DESCARGA_IMAGENES + foto.getId())
                                 .build())
                         .collect(Collectors.toSet()))
-                .ubicacion(anuncio.getUbicacion())
+                .localidad(anuncio.getLocalidad())
                 .comentario(anuncio.getComentario())
                 .telefonoContacto(anuncio.getTelefonoContacto())
                 .fechaCreacion(anuncio.getFechaCreacion())
