@@ -1,8 +1,13 @@
 # Contribuir al proyecto
 
-Por favor, tomáte unos minutos para leer estos lineamientos y así facilitar el proceso de contribución.
+Por favor, tomate unos minutos para leer estos lineamientos y así facilitar el proceso de contribución.
 Se agradece el tiempo empleado, pero hay unas reglas de generación y aprobación de
-cambios para asegurarnos de hacer de esta plataforma el mejor buscador de mascotas perdidas.
+cambios para asegurarnos de hacer de esta plataforma el mejor buscador de mascotas perdidas!
+
+## Herramientas recomendadas
+- IntelliJ Idea o en su defecto Netbeans para el backend
+- Visual Studio Code para el frontend
+- DBeaver para crear y consultar la base de datos
 
 ## Issues
 
@@ -106,4 +111,24 @@ Pasos a seguir:
 7. Crear un Pull Request en el repo origianl haciendo referencia al issue:
    en la descripción poner "resolves #45" si resolviera el issue Nº 45
 
-**IMPORTANTE**: _Todo lo que se suba adhiere a la política de Open Source del proyecto._
+**IMPORTANTE**: _Todo lo que se suba adhiere a la política Open Source del proyecto._
+
+
+## Definición de Terminado
+Cuando se termina una tarea y el Pull Request está listo para ser mergeado, se va a hacer una revisión
+del código y de la web para que cumpla con la Definición de Terminado (DDT). Está bueno tenerlo en
+cuenta desde el inicio para reducir el ida y vuelta en los issues. No es lo más común, pero puede pasar
+que la DDT se modifique en algún momento. Si tenés alguna duda, revisá funcionalidades similares o consultá.
+
+### Funcionamiento
+- El backend y frontend compilan correctamente (comando `./mvnw package`)
+- El frontend es responsive. Funciona y se ve correctamente para pantallas con ancho: 480, 768 y 1200 píxels
+- En el frontend se usan los colores y el logo del proyecto.
+### Código
+- No hay referencias a recursos locales (del entorno del desarrollador)
+- Está formateado por el IDE
+- Todas las clases o componentes nuevos tienen una descripción de lo que hacen y el usuario de Github que lo creó
+
+## Meta-contribución
+Si te gustaría agregar algo a este documento o pensás que se puede mejorar, sentite libre de crear un PR o
+consultar :)
