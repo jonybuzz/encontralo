@@ -57,12 +57,12 @@ public class ControllerLoggingAspect {
             if (auth == null) {
                 log.info("[Respuesta] Anonimo => {}. Parametros: {}",
                         joinPoint.getSignature().toShortString(),
-                        joinPoint.getArgs());
+                        resultado);
             } else {
                 log.info("[Respuesta] {} => {}. Parametros: {}",
                         SecurityContextHolder.getContext().getAuthentication().getName(),
                         joinPoint.getSignature().toShortString(),
-                        joinPoint.getArgs());
+                        resultado);
             }
         }
     }

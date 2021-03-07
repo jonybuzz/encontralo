@@ -161,6 +161,7 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(env),
       'process.env.TARGET': JSON.stringify(target),
+      'process.env.BACK_URL': JSON.stringify(process.env.BACK_URL)
     }),
     new VueLoaderPlugin(),
     ...(env === 'production' ? [

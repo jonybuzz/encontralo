@@ -1,8 +1,8 @@
 {
-  "name": "Encontralo",
+  "name": "Encontralo.com.ar",
   "short_name": "Encontralo",
-  "description": "Encontralo",
-  "lang": "en-US",
+  "description": "El buscador Nº1 de mascotas perdidas",
+  "lang": "es-AR",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#4c00ff",

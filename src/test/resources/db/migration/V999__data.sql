@@ -3,7 +3,8 @@ INSERT INTO raza
 ( 1,          1, 'Mestizo'     ),
 ( 2,          1, 'Bulldog'     ),
 ( 3,          1, 'Maltés'      ),
-( 4,          1, 'Caniche Toy' );
+( 4,          1, 'Caniche Toy' ),
+( 5,          2, 'Siamés'      );
 
 INSERT INTO color
 (id, nombre  , codigo_hex) VALUES

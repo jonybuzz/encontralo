@@ -3,23 +3,16 @@
   "private": true,
   "version": "1.0.0",
   "description": "Encontralo",
-  "repository": "",
+  "repository": "github.com/jonybuzz/encontralo",
   "license": "UNLICENSED",
   "scripts": {
     "start": "npm run dev",
-    "dev": "cross-env NODE_ENV=development webpack serve --config ./build/webpack.config.js",
-    "build": "cross-env NODE_ENV=production node ./build/build.js",
+    "dev": "cross-env NODE_ENV=development BACK_URL=http://localhost:8081 webpack serve --config ./build/webpack.config.js",
+    "build": "cross-env NODE_ENV=production BACK_URL= node ./build/build.js",
     "postinstall": "cpy ./node_modules/framework7-icons/fonts/*.* ./src/fonts/"
   },
-  "browserslist": [
-    "Android >= 7",
-    "IOS >= 11",
-    "Safari >= 11",
-    "Chrome >= 49",
-    "Firefox >= 31",
-    "Samsung >= 5"
-  ],
   "dependencies": {
+    "axios": "^0.21.1",
     "dom7": "^3.0.0",
     "framework7": "^6.0.6",
     "framework7-icons": "^3.0.1",
@@ -59,5 +52,13 @@
     "webpack-cli": "^4.4.0",
     "webpack-dev-server": "^3.11.2",
     "workbox-webpack-plugin": "^6.0.2"
-  }
+  },
+  "browserslist": [
+    "Android >= 7",
+    "IOS >= 11",
+    "Safari >= 11",
+    "Chrome >= 49",
+    "Firefox >= 31",
+    "Samsung >= 5"
+  ]
 }

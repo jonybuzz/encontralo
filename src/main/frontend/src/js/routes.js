@@ -1,11 +1,8 @@
 
 import HomePage from '../pages/home.vue';
-import AboutPage from '../pages/about.vue';
-import FormPage from '../pages/form.vue';
+import AnunciarPerdido from '../pages/anunciarPerdido.vue';
 
 
-import DynamicRoutePage from '../pages/dynamic-route.vue';
-import RequestAndLoad from '../pages/request-and-load.vue';
 import NotFoundPage from '../pages/404.vue';
 
 var routes = [
@@ -14,21 +11,7 @@ var routes = [
     component: HomePage,
   },
   {
-    path: '/about/',
-    component: AboutPage,
-  },
-  {
-    path: '/form/',
-    component: FormPage,
-  },
-
-
-  {
-    path: '/dynamic-route/blog/:blogId/post/:postId/',
-    component: DynamicRoutePage,
-  },
-  {
-    path: '/request-and-load/user/:userId/',
+    path: '/anunciar-perdido',
     async: function ({ router, to, resolve }) {
       // App instance
       var app = router.app;
@@ -63,12 +46,7 @@ var routes = [
         // Resolve route to load page
         resolve(
           {
-            component: RequestAndLoad,
-          },
-          {
-            props: {
-              user: user,
-            }
+            component: AnunciarPerdido,
           }
         );
       }, 1000);

@@ -1,25 +1,32 @@
 package com.jonybuzz.encontralo.repository;
 
 import com.jonybuzz.encontralo.model.Tamanio;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
 public class TamanioRepository extends InMemoryRepository<Tamanio, Integer> {
-
-    @Autowired
-    private EspecieRepository especieRepository;
 
     @Override
     @PostConstruct
     protected final void init() {
         load(
-                especieRepository.findAll().stream()
-                        .flatMap(especie -> especie.getTamanios().stream())
-                        .toArray(Tamanio[]::new)
+                new Tamanio(1, "Chico", 1),
+                new Tamanio(2, "Mediano", 1),
+                new Tamanio(3, "Grande", 1),
+                new Tamanio(4, "Único", 2)
         );
+    }
+
+    public Set<Tamanio> findByEspecieId(Integer id) {
+        return this.entidades.entrySet().stream()
+                .filter(entry -> entry.getValue().getEspecieId().equals(id))
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toSet());
     }
 
 }

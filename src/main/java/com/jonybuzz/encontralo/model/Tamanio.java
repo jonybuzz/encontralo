@@ -16,4 +16,6 @@ public class Tamanio implements IdEntity<Integer> {
 
     private String nombre;
 
+    private Integer especieId;
+
 }
