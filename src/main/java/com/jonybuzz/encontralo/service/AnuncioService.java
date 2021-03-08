@@ -64,7 +64,7 @@ public class AnuncioService {
         anuncio.setNombreMascota(dto.getNombreMascota());
         anuncio.setNombreMascotaNormalizado(this.normalizarNombre(dto.getNombreMascota()));
         anuncio.setEspecieId(dto.getEspecieId());
-        anuncio.setRaza(razaRepository.getOne(dto.getRazaId()));
+        anuncio.setRaza(dto.getRazaId() == null ? null : razaRepository.getOne(dto.getRazaId()));
         anuncio.setSexoId(dto.getSexoId());
         anuncio.setTamanioId(dto.getTamanioId());
         anuncio.setFranjaEtariaId(dto.getFranjaEtariaId());
@@ -73,7 +73,7 @@ public class AnuncioService {
         anuncio.setPelajeId(dto.getPelajeId());
         anuncio.setFotos(dto.getFotos().stream()
                 .map(ImagenUploadDto::toImagen).collect(Collectors.toSet()));
-        anuncio.setLocalidad(localidadRepository.getOne(dto.getLocalidadId()));
+        anuncio.setLocalidad(dto.getLocalidadId() == null ? null : localidadRepository.getOne(dto.getLocalidadId()));
         anuncio.setComentario(StringUtils.normalizeSpace(dto.getComentario()));
         anuncio.setTelefonoContacto(dto.getTelefonoContacto());
         anuncio.setFechaCreacion(LocalDateTime.now());
@@ -93,7 +93,7 @@ public class AnuncioService {
     }
 
     private String normalizarNombre(String str) {
-        return StringUtils.stripAccents(StringUtils.normalizeSpace(str))
+        return str == null ? null : StringUtils.stripAccents(StringUtils.normalizeSpace(str))
                 .toUpperCase().replaceAll("[^A-Z\\s]", "");
     }
 

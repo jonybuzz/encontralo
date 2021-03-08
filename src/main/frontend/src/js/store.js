@@ -1,5 +1,5 @@
 import {createStore} from 'framework7/lite';
-import Axios from 'axios'
+import RequestsSeleccionables from './requests/seleccionables'
 
 const store = createStore({
     state: {
@@ -9,7 +9,7 @@ const store = createStore({
     actions: {
         getSeleccionables({state}) {
             state.cargando = true
-            Axios.get('/api/seleccionables')
+            RequestsSeleccionables.getSeleccionables
                 .then(res => res.data)
                 .then(seleccionables => {
                     state.seleccionables = seleccionables;
@@ -21,8 +21,8 @@ const store = createStore({
         },
     },
     getters: {
-        colores({state}) {
-            return state.seleccionables.colores;
+        seleccionables({state}) {
+            return state.seleccionables;
         }
     }
 })

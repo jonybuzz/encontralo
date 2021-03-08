@@ -16,4 +16,5 @@ public class SeleccionablesRestController {
     public SeleccionablesDto obtenerSeleccionables() {
         return seleccionablesService.obtenerSeleccionables();
     }
+
 }

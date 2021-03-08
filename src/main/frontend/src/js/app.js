@@ -17,10 +17,6 @@ import '../css/app.scss';
 // Import App Component
 import App from '../components/app.vue';
 
-import Axios from 'axios'
-
-Axios.defaults.baseURL = process.env.BACK_URL;
-
 // Init Framework7-Vue Plugin
 Framework7.use(Framework7Vue);
 

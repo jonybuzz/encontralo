@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -28,13 +29,13 @@ public class NuevoAnuncioDto {
 
     private Integer franjaEtariaId;
 
-    private Set<Integer> coloresIds;
+    private Set<Integer> coloresIds = new HashSet<>();
 
     private Boolean tieneCollar;
 
     private Integer pelajeId;
 
-    private Set<ImagenUploadDto> fotos;
+    private Set<ImagenUploadDto> fotos = new HashSet<>();
 
     private Integer localidadId;
 

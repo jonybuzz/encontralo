@@ -8,14 +8,15 @@
         <f7-list inline-labels no-hairlines-md>
           <f7-list-item radio radio-icon="start" title="Perro" name="demo-radio-start" checked></f7-list-item>
           <f7-list-item radio radio-icon="start" title="Gato" name="demo-radio-start"></f7-list-item>
+
           <f7-list-input
               label="Sexo"
               type="select"
               placeholder="Seleccionar..."
+              v-model:value="sexoId"
           >
             <option value="" selected disabled>Seleccionar...</option>
-            <option value="Male">Mestizo</option>
-            <option value="Female">Bulldog</option>
+            <option v-for="sexo in seleccionables.sexos" :key="sexo.id" :value="sexo.id">{{ sexo.nombre }}</option>
           </f7-list-input>
 
           <f7-list-input
@@ -111,7 +112,7 @@
 
     <f7-row class="enc-col-center-content">
       <f7-col width="90" xsmall="90" small="60" medium="33" xlarge="20" class="enc-main-button">
-        <f7-button large fill raised href="/anunciar-perdido">Anunciar</f7-button>
+        <f7-button large fill raised href="/" @click="crearAnuncio">Anunciar</f7-button>
       </f7-col>
     </f7-row>
 
@@ -120,9 +121,42 @@
 </template>
 
 <script>
+import {onMounted} from 'vue'
+import {useStore} from 'framework7-vue'
+import requestsAnuncio from './../js/requests/anuncio'
+
 export default {
-  name: "anunciarPerdido.vue"
+  name: "anunciarPerdido.vue",
+  setup() {
+    const seleccionables = useStore('seleccionables');
+
+    onMounted(() => {
+      //
+    });
+
+    return {
+      seleccionables,
+    }
+  },
+  data() {
+    return {
+      sexoId: ''
+    };
+  },
+  methods: {
+    crearAnuncio() {
+      const self = this
+      const nuevoAnuncio = {
+        tipo: 'PERDIDO',
+        sexoId: self.sexoId
+      }
+      console.dir(nuevoAnuncio)
+      requestsAnuncio.crear(nuevoAnuncio)
+          .then((response) => console.log(response.data))
+    }
+  }
 }
+
 </script>
 
 <style scoped>

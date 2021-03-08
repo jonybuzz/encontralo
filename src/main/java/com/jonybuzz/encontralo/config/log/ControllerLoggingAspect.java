@@ -55,11 +55,11 @@ public class ControllerLoggingAspect {
         if (log.isInfoEnabled()) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             if (auth == null) {
-                log.info("[Respuesta] Anonimo => {}. Parametros: {}",
+                log.info("[Respuesta] Anonimo => {}. Resultado: {}",
                         joinPoint.getSignature().toShortString(),
                         resultado);
             } else {
-                log.info("[Respuesta] {} => {}. Parametros: {}",
+                log.info("[Respuesta] {} => {}. Resultado: {}",
                         SecurityContextHolder.getContext().getAuthentication().getName(),
                         joinPoint.getSignature().toShortString(),
                         resultado);
