@@ -13,6 +13,7 @@ import com.jonybuzz.encontralo.model.FranjaEtaria;
 import com.jonybuzz.encontralo.model.Imagen;
 import com.jonybuzz.encontralo.model.Pelaje;
 import com.jonybuzz.encontralo.model.Raza;
+import com.jonybuzz.encontralo.model.Sexo;
 import com.jonybuzz.encontralo.model.TipoAnuncio;
 import com.jonybuzz.encontralo.repository.AnuncioRepository;
 import com.jonybuzz.encontralo.testutils.builder.AnuncioBuilder;
@@ -36,13 +37,12 @@ class SeleccionablesServiceTests extends ApplicationTests {
     @Autowired
     SeleccionablesService seleccionablesService;
 
-    @Autowired
-    EntityManager em;
-
     @Test
     void obtenerSeleccionables_estaTodoOk_devuelveDtoCompleto() {
         SeleccionablesDto dto = seleccionablesService.obtenerSeleccionables();
 
+        assertThat(dto.getSexos()).extracting(Sexo::getNombre)
+                .containsExactlyInAnyOrder("Macho", "Hembra");
         assertThat(dto.getColores()).extracting(Color::getNombre)
                 .containsExactlyInAnyOrder("Beige", "Negro", "Blanco", "Marrón");
         assertThat(dto.getEspecies()).hasSize(2);

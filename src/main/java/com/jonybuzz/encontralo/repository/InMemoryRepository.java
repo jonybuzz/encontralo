@@ -1,10 +1,14 @@
 package com.jonybuzz.encontralo.repository;
 
 import com.jonybuzz.encontralo.model.IdEntity;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 @NoRepositoryBean
 public abstract class InMemoryRepository<T extends IdEntity<I>, I> implements ReadOnlyRepository<T, I> {
@@ -16,11 +20,23 @@ public abstract class InMemoryRepository<T extends IdEntity<I>, I> implements Re
     @SafeVarargs
     protected final void load(T... entidades) {
         for (T elem : entidades) {
-            this.entidades.put(elem.getId(), elem);
+            I id = elem.getId();
+            if (id == null) {
+                throw new IllegalArgumentException("ID no puede ser null.");
+            }
+            if (this.entidades.containsKey(id)) {
+                throw new DataIntegrityViolationException(
+                        String.format("La entidad %s con ID %s ya existe.", elem.getClass().getName(), id));
+            } else {
+                this.entidades.put(id, elem);
+            }
         }
     }
 
     public T getOne(I id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID no puede ser null.");
+        }
         return this.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Entidad con ID %s no encontrada.", id)));
     }

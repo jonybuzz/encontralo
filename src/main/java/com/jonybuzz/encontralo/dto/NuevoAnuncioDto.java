@@ -24,6 +24,8 @@ public class NuevoAnuncioDto {
 
     private Integer tamanioId;
 
+    private Integer sexoId;
+
     private Integer franjaEtariaId;
 
     private Set<Integer> coloresIds;

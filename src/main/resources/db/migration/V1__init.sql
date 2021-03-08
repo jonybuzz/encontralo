@@ -33,6 +33,7 @@ CREATE TABLE anuncio (
   nombre_mascota_normalizado VARCHAR(100),
   especie_id INT,
   raza_id INT,
+  sexo_id INT,
   tamanio_id INT,
   franja_etaria_id INT,
   tiene_collar BOOLEAN,

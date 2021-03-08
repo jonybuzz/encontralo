@@ -25,6 +25,8 @@ public class Anuncio {
     @ManyToOne
     private Raza raza;
 
+    private Integer sexoId;
+
     private Integer tamanioId;
 
     private Integer franjaEtariaId;

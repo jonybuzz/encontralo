@@ -6,6 +6,7 @@ import com.jonybuzz.encontralo.model.FranjaEtaria;
 import com.jonybuzz.encontralo.model.Localidad;
 import com.jonybuzz.encontralo.model.Pelaje;
 import com.jonybuzz.encontralo.model.Raza;
+import com.jonybuzz.encontralo.model.Sexo;
 import com.jonybuzz.encontralo.model.Tamanio;
 import com.jonybuzz.encontralo.model.TipoAnuncio;
 import lombok.Builder;
@@ -27,6 +28,8 @@ public class AnuncioDto {
     private Especie especie;
 
     private Raza raza;
+
+    private Sexo sexo;
 
     private Tamanio tamanio;
 

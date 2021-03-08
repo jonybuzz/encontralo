@@ -60,21 +60,23 @@ class AnuncioServiceTests extends ApplicationTests {
         filtro.setEspecieId(1);
         filtro.setPagina(1);
         Imagen fotoPerro = ImagenBuilder.vacia().build();
-        AnuncioBuilder.perro().perdido().conFotos(fotoPerro).build(em);
+        AnuncioBuilder.perro().perdido().conFotos(fotoPerro).build(em); //OK
         AnuncioBuilder.gato().perdido().build(em);
         AnuncioBuilder.perro().encontrado().build(em);
         AnuncioBuilder.gato().encontrado().build(em);
+        AnuncioBuilder.datosMinimos().encontrado().build(em);
+        AnuncioBuilder.datosMinimos().razaPerro().perdido().build(em); //OK
         //Ejecucion
         var paginaAnuncios = anuncioService.buscarAnuncios(filtro);
         assertThat(paginaAnuncios).isNotEmpty();
         assertThat(paginaAnuncios.getPageable().getPageSize()).isEqualTo(15);
         assertThat(paginaAnuncios.getTotalPages()).isEqualTo(1);
-        assertThat(paginaAnuncios.getTotalElements()).isEqualTo(1);
+        assertThat(paginaAnuncios.getTotalElements()).isEqualTo(2);
         Especie especiePerro = new Especie();
         especiePerro.setId(1);
         assertThat(paginaAnuncios.getContent())
                 .extracting(AnuncioDto::getTipo, AnuncioDto::getEspecie)
-                .containsExactly(Tuple.tuple(TipoAnuncio.PERDIDO, especiePerro));
+                .containsExactly(Tuple.tuple(TipoAnuncio.PERDIDO, especiePerro), Tuple.tuple(TipoAnuncio.PERDIDO, especiePerro));
         assertThat(paginaAnuncios.getContent().get(0).getFotos())
                 .extracting(ImagenDownloadDto::getPosicion, ImagenDownloadDto::getUrl)
                 .containsExactly(Tuple.tuple(fotoPerro.getPosicion(), "/imagenes/" + fotoPerro.getId()));
@@ -86,6 +88,7 @@ class AnuncioServiceTests extends ApplicationTests {
                 .nombreMascota("Señor Itatí,, ")
                 .especieId(1)
                 .razaId(3)
+                .sexoId(1)
                 .tamanioId(3)
                 .franjaEtariaId(3)
                 .coloresIds(Set.of(2, 3))

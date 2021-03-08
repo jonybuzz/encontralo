@@ -1,9 +1,13 @@
 package com.jonybuzz.encontralo.testutils.builder;
 
-import com.jonybuzz.encontralo.model.*;
+import com.jonybuzz.encontralo.model.Anuncio;
+import com.jonybuzz.encontralo.model.Color;
+import com.jonybuzz.encontralo.model.Imagen;
+import com.jonybuzz.encontralo.model.Localidad;
+import com.jonybuzz.encontralo.model.Raza;
+import com.jonybuzz.encontralo.model.TipoAnuncio;
 import com.somospnt.test.builder.AbstractPersistenceBuilder;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -66,6 +70,13 @@ public class AnuncioBuilder extends AbstractPersistenceBuilder<Anuncio> {
         return builder;
     }
 
+    public static AnuncioBuilder datosMinimos() {
+        var builder = new AnuncioBuilder();
+        builder.instance.setTipo(TipoAnuncio.PERDIDO);
+        builder.instance.setFechaCreacion(LocalDateTime.of(2020, 1, 29, 12, 0));
+        return builder;
+    }
+
     public AnuncioBuilder perdido() {
         this.instance.setTipo(TipoAnuncio.PERDIDO);
         return this;
@@ -76,10 +87,15 @@ public class AnuncioBuilder extends AbstractPersistenceBuilder<Anuncio> {
         return this;
     }
 
+    public AnuncioBuilder razaPerro() {
+        this.instance.setEspecieId(1);
+        return this;
+    }
+
     public AnuncioBuilder conFotos(Imagen... imgs) {
         HashSet<Imagen> set = new HashSet<>();
         for (int i = 0; i < imgs.length; i++) {
-            imgs[i].setPosicion(i+1);
+            imgs[i].setPosicion(i + 1);
             set.add(imgs[i]);
         }
         this.instance.setFotos(set);

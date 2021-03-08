@@ -13,6 +13,7 @@ import com.jonybuzz.encontralo.repository.FranjaEtariaRepository;
 import com.jonybuzz.encontralo.repository.LocalidadRepository;
 import com.jonybuzz.encontralo.repository.PelajeRepository;
 import com.jonybuzz.encontralo.repository.RazaRepository;
+import com.jonybuzz.encontralo.repository.SexoRepository;
 import com.jonybuzz.encontralo.repository.TamanioRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -34,7 +36,7 @@ import static java.util.Collections.emptySet;
 public class AnuncioService {
 
     public static final int PAGE_SIZE = 15;
-    public static final String PATH_DESCARGA_IMAGENES = "/imagenes/";
+    public static final String PATH_DESCARGA_IMAGENES = "imagenes";
     @Autowired
     private AnuncioRepository anuncioRepository;
     @Autowired
@@ -51,6 +53,8 @@ public class AnuncioService {
     private PelajeRepository pelajeRepository;
     @Autowired
     private LocalidadRepository localidadRepository;
+    @Autowired
+    private SexoRepository sexoRepository;
 
     @Transactional
     public Long crearAnuncio(NuevoAnuncioDto dto) {
@@ -61,6 +65,7 @@ public class AnuncioService {
         anuncio.setNombreMascotaNormalizado(this.normalizarNombre(dto.getNombreMascota()));
         anuncio.setEspecieId(dto.getEspecieId());
         anuncio.setRaza(razaRepository.getOne(dto.getRazaId()));
+        anuncio.setSexoId(dto.getSexoId());
         anuncio.setTamanioId(dto.getTamanioId());
         anuncio.setFranjaEtariaId(dto.getFranjaEtariaId());
         anuncio.setColores(new HashSet<>(colorRepository.findAllById(dto.getColoresIds())));
@@ -97,17 +102,20 @@ public class AnuncioService {
                 .id(anuncio.getId())
                 .tipo(anuncio.getTipo())
                 .nombreMascota(anuncio.getNombreMascota())
-                .especie(especieRepository.getOne(anuncio.getEspecieId()))
+                .especie(anuncio.getEspecieId() == null ? null : especieRepository.getOne(anuncio.getEspecieId()))
                 .raza(anuncio.getRaza())
-                .tamanio(tamanioRepository.getOne(anuncio.getTamanioId()))
-                .franjaEtaria(franjaEtariaRepository.getOne(anuncio.getFranjaEtariaId()))
+                .sexo(anuncio.getSexoId() == null ? null : sexoRepository.getOne(anuncio.getSexoId()))
+                .tamanio(anuncio.getTamanioId() == null ? null : tamanioRepository.getOne(anuncio.getTamanioId()))
+                .franjaEtaria(anuncio.getFranjaEtariaId() == null ? null : franjaEtariaRepository.getOne(anuncio.getFranjaEtariaId()))
                 .colores(anuncio.getColores() == null ? emptySet() : anuncio.getColores())
                 .tieneCollar(anuncio.getTieneCollar())
-                .pelaje(pelajeRepository.getOne(anuncio.getPelajeId()))
+                .pelaje(anuncio.getPelajeId() == null ? null : pelajeRepository.getOne(anuncio.getPelajeId()))
                 .fotos(anuncio.getFotos() == null ? emptySet() : anuncio.getFotos().stream()
                         .map(foto -> ImagenDownloadDto.builder()
                                 .posicion(foto.getPosicion())
-                                .url(PATH_DESCARGA_IMAGENES + foto.getId())
+                                .url(UriComponentsBuilder.fromPath("/")
+                                        .pathSegment(PATH_DESCARGA_IMAGENES)
+                                        .pathSegment(foto.getId().toString()).toUriString())
                                 .build())
                         .collect(Collectors.toSet()))
                 .localidad(anuncio.getLocalidad())

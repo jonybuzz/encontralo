@@ -7,6 +7,7 @@ import com.jonybuzz.encontralo.repository.EspecieRepository;
 import com.jonybuzz.encontralo.repository.FranjaEtariaRepository;
 import com.jonybuzz.encontralo.repository.PelajeRepository;
 import com.jonybuzz.encontralo.repository.RazaRepository;
+import com.jonybuzz.encontralo.repository.SexoRepository;
 import com.jonybuzz.encontralo.repository.TamanioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ public class SeleccionablesService {
 
     @Autowired
     private RazaRepository razaRepository;
+    @Autowired
+    private SexoRepository sexoRepository;
     @Autowired
     private ColorRepository colorRepository;
     @Autowired
@@ -33,6 +36,7 @@ public class SeleccionablesService {
 
     public SeleccionablesDto obtenerSeleccionables() {
         SeleccionablesDto dto = new SeleccionablesDto();
+        dto.setSexos(new HashSet<>(sexoRepository.findAll()));
         dto.setColores(new HashSet<>(colorRepository.findAll()));
         dto.setEspecies(especieRepository.findAll().stream()
                 .map(especie -> new EspecieDto(
