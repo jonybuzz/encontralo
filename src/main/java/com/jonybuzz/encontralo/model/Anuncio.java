@@ -25,7 +25,9 @@ public class Anuncio {
     @ManyToOne
     private Raza raza;
 
-    private Integer sexoId;
+    @Column(name = "sexo_id")
+    @Enumerated(EnumType.ORDINAL)
+    private Sexo sexo;
 
     private Integer tamanioId;
 

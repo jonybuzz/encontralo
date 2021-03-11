@@ -8,6 +8,13 @@
 
 /* Your app custom styles here */
 
+//Modificaciones generales al tema
+
+.list {
+  margin-top: calc(var(--f7-list-margin-vertical) - 10px);
+}
+
+//Clases custom
 .enc-logo {
   font-family: 'Grandstander', sans-serif;
   font-weight: 200 !important;

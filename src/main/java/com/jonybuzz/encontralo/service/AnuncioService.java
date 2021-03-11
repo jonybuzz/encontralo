@@ -13,7 +13,6 @@ import com.jonybuzz.encontralo.repository.FranjaEtariaRepository;
 import com.jonybuzz.encontralo.repository.LocalidadRepository;
 import com.jonybuzz.encontralo.repository.PelajeRepository;
 import com.jonybuzz.encontralo.repository.RazaRepository;
-import com.jonybuzz.encontralo.repository.SexoRepository;
 import com.jonybuzz.encontralo.repository.TamanioRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,19 +52,17 @@ public class AnuncioService {
     private PelajeRepository pelajeRepository;
     @Autowired
     private LocalidadRepository localidadRepository;
-    @Autowired
-    private SexoRepository sexoRepository;
 
     @Transactional
     public Long crearAnuncio(NuevoAnuncioDto dto) {
 
         Anuncio anuncio = new Anuncio();
         anuncio.setTipo(dto.getTipo());
-        anuncio.setNombreMascota(dto.getNombreMascota());
+        anuncio.setNombreMascota(StringUtils.normalizeSpace(dto.getNombreMascota()));
         anuncio.setNombreMascotaNormalizado(this.normalizarNombre(dto.getNombreMascota()));
         anuncio.setEspecieId(dto.getEspecieId());
         anuncio.setRaza(dto.getRazaId() == null ? null : razaRepository.getOne(dto.getRazaId()));
-        anuncio.setSexoId(dto.getSexoId());
+        anuncio.setSexo(dto.getSexo());
         anuncio.setTamanioId(dto.getTamanioId());
         anuncio.setFranjaEtariaId(dto.getFranjaEtariaId());
         anuncio.setColores(new HashSet<>(colorRepository.findAllById(dto.getColoresIds())));
@@ -93,8 +90,11 @@ public class AnuncioService {
     }
 
     private String normalizarNombre(String str) {
-        return str == null ? null : StringUtils.stripAccents(StringUtils.normalizeSpace(str))
-                .toUpperCase().replaceAll("[^A-Z\\s]", "");
+        return str == null ? null :
+                StringUtils.normalizeSpace(
+                        StringUtils.stripAccents(str)
+                                .toUpperCase().replaceAll("[^A-Z\\s]", "")
+                );
     }
 
     public AnuncioDto anuncioToDto(Anuncio anuncio) {
@@ -104,7 +104,7 @@ public class AnuncioService {
                 .nombreMascota(anuncio.getNombreMascota())
                 .especie(anuncio.getEspecieId() == null ? null : especieRepository.getOne(anuncio.getEspecieId()))
                 .raza(anuncio.getRaza())
-                .sexo(anuncio.getSexoId() == null ? null : sexoRepository.getOne(anuncio.getSexoId()))
+                .sexo(anuncio.getSexo())
                 .tamanio(anuncio.getTamanioId() == null ? null : tamanioRepository.getOne(anuncio.getTamanioId()))
                 .franjaEtaria(anuncio.getFranjaEtariaId() == null ? null : franjaEtariaRepository.getOne(anuncio.getFranjaEtariaId()))
                 .colores(anuncio.getColores() == null ? emptySet() : anuncio.getColores())

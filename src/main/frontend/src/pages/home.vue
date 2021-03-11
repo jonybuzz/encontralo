@@ -9,13 +9,20 @@
 
     <!-- Page content-->
     <f7-swiper>
-      <f7-swiper-slide class="enc-slide">El buscador Nº1 de mascotas perdidas</f7-swiper-slide>
+      <f7-swiper-slide class="enc-slide">
+        El buscador Nº1 de mascotas perdidas
+        <f7-row class="enc-col-center-content hide-">
+          <f7-col width="90" xsmall="90" small="60" medium="33" xlarge="20" class="enc-main-button">
+            <f7-button large fill raised href="/anunciar-perdido" class="enc-cta">Anunciar perdido</f7-button>
+          </f7-col>
+        </f7-row>
+      </f7-swiper-slide>
     </f7-swiper>
 
     <f7-block>
       <f7-row class="enc-col-center-content">
         <f7-col width="90" xsmall="90" small="60" medium="33" xlarge="20" class="enc-main-button">
-          <f7-button large fill raised href="/anunciar-perdido">Anunciar perdido</f7-button>
+          <f7-button large fill raised href="/anunciar-perdido" class="enc-cta">Anunciar perdido</f7-button>
         </f7-col>
         <f7-col width="90" xsmall="90" small="60" medium="33" xlarge="20" class="enc-main-button">
           <f7-button large fill raised href="/anunciar-encontrado">Anunciar encontrado</f7-button>
@@ -26,7 +33,7 @@
     <f7-block>
       <f7-row class="enc-col-center-content">
         <f7-col width="90" xsmall="90" small="60" medium="33" xlarge="20" class="enc-main-button">
-          <f7-button large raised href="/anunciar-perdido" icon-f7="search">Buscar</f7-button>
+          <f7-button large href="/buscar" icon-f7="search">Buscar</f7-button>
         </f7-col>
       </f7-row>
     </f7-block>
@@ -133,11 +140,27 @@
   background-image: url("/src/static/img/slide_1.jpg");
   background-position: center;
 }
+.enc-slide .enc-cta {
+  display: none;
+}
 
 @media only screen and (max-width: 568px) {
   .enc-slide {
-    line-height: 280px;
+    line-height: 230px;
     background-image: url("/src/static/img/slide_1_mobile.jpg");
+    background-size: cover;
+    height: calc(100vh - var(--f7-navbar-height));
+  }
+  .enc-cta {
+    display: none;
+  }
+  .enc-slide .enc-cta {
+    display: block;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .enc-slide {
     background-size: cover;
   }
 }

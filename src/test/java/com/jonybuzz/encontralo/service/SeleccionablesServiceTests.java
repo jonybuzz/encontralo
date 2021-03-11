@@ -6,15 +6,7 @@ import com.jonybuzz.encontralo.dto.ImagenDownloadDto;
 import com.jonybuzz.encontralo.dto.ImagenUploadDto;
 import com.jonybuzz.encontralo.dto.NuevoAnuncioDto;
 import com.jonybuzz.encontralo.dto.SeleccionablesDto;
-import com.jonybuzz.encontralo.model.Color;
-import com.jonybuzz.encontralo.model.Especie;
-import com.jonybuzz.encontralo.model.FiltroAnuncios;
-import com.jonybuzz.encontralo.model.FranjaEtaria;
-import com.jonybuzz.encontralo.model.Imagen;
-import com.jonybuzz.encontralo.model.Pelaje;
-import com.jonybuzz.encontralo.model.Raza;
-import com.jonybuzz.encontralo.model.Sexo;
-import com.jonybuzz.encontralo.model.TipoAnuncio;
+import com.jonybuzz.encontralo.model.*;
 import com.jonybuzz.encontralo.repository.AnuncioRepository;
 import com.jonybuzz.encontralo.testutils.builder.AnuncioBuilder;
 import com.jonybuzz.encontralo.testutils.builder.ImagenBuilder;
@@ -41,8 +33,8 @@ class SeleccionablesServiceTests extends ApplicationTests {
     void obtenerSeleccionables_estaTodoOk_devuelveDtoCompleto() {
         SeleccionablesDto dto = seleccionablesService.obtenerSeleccionables();
 
-        assertThat(dto.getSexos()).extracting(Sexo::getNombre)
-                .containsExactlyInAnyOrder("Macho", "Hembra");
+        assertThat(dto.getSexos())
+                .containsExactlyInAnyOrder(Sexo.MACHO, Sexo.HEMBRA);
         assertThat(dto.getColores()).extracting(Color::getNombre)
                 .containsExactlyInAnyOrder("Beige", "Negro", "Blanco", "Marrón");
         assertThat(dto.getEspecies()).hasSize(2);
@@ -54,6 +46,8 @@ class SeleccionablesServiceTests extends ApplicationTests {
                 .containsExactlyInAnyOrder("Cachorro", "Adulto joven", "Adulto", "Adulto mayor");
         assertThat(dto.getPelajes()).extracting(Pelaje::getNombre)
                 .containsExactlyInAnyOrder("Corto", "Largo");
+        assertThat(dto.getLocalidades()).extracting(Localidad::getNombre)
+                .containsExactlyInAnyOrder("Lanús", "Avellaneda", "Quilmes");
     }
 
 }

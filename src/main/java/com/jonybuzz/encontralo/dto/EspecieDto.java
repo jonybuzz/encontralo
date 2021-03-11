@@ -13,6 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class EspecieDto {
 
+    private Integer id;
     private Set<Raza> razas;
     private Set<Tamanio> tamanios;
 

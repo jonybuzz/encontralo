@@ -1,5 +1,6 @@
 package com.jonybuzz.encontralo.dto;
 
+import com.jonybuzz.encontralo.model.Sexo;
 import com.jonybuzz.encontralo.model.TipoAnuncio;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +26,7 @@ public class NuevoAnuncioDto {
 
     private Integer tamanioId;
 
-    private Integer sexoId;
+    private Sexo sexo;
 
     private Integer franjaEtariaId;
 

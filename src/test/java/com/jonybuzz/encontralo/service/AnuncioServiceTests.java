@@ -88,7 +88,7 @@ class AnuncioServiceTests extends ApplicationTests {
                 .nombreMascota("Señor Itatí,, ")
                 .especieId(1)
                 .razaId(3)
-                .sexoId(1)
+                .sexo(Sexo.MACHO)
                 .tamanioId(3)
                 .franjaEtariaId(3)
                 .coloresIds(Set.of(2, 3))
