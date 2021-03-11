@@ -2,6 +2,8 @@
 
 Web que reúne mascotas perdidas con sus dueños. Roadmap: https://github.com/jonybuzz/encontralo/projects/1
 
+Si querés ayudarnos, ésta es la [guía para contribuir](CONTRIBUTING.md)
+
 ## Diseño
 
 ![Diseño](documentacion/diagrama-despliegue.svg)
@@ -9,6 +11,8 @@ Web que reúne mascotas perdidas con sus dueños. Roadmap: https://github.com/jo
 <a href="https://app.diagrams.net/#Hjonybuzz%2Fencontralo%2Fmain%2Fdocumentacion%2Fdiagrama-despliegue.svg" target="_blank">Editar en diagrams.net</a>
 
 <a href="https://app.diagrams.net/#Hjonybuzz%2Fencontralo%2Fmain%2Fdocumentacion%2Fdiagrama-clases.svg" target="_blank">Diagrama de clases</a>
+
+El ejecutable de la aplicación es un JAR que contiene todo lo necesario para correr. El frontend maneja el código como un proyecto independiente y está ubicado en [/src/main/frontend](/src/main/frontend). Al momento de empaquetar el JAR, se compila el frontend y se incluye dentro.
 
 # Getting Started
 
