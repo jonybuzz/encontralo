@@ -224,7 +224,7 @@ export default {
             f7.toast.create({
               position: "top",
               horizontalPosition: "right",
-              icon: '<i class="f7-icons">exclamationmark_bubble_fill</i>',
+              icon: '<i class="f7-icons">captions_bubble</i>',
               text: `¡Anuncio #${response.data} publicado!`,
               closeTimeout: 3000
             }).open();
