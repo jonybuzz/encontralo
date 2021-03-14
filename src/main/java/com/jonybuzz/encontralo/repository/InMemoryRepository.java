@@ -35,7 +35,7 @@ public abstract class InMemoryRepository<T extends IdEntity<I>, I> implements Re
 
     public T getOne(I id) {
         if (id == null) {
-            throw new IllegalArgumentException("ID no puede ser null.");
+            return null;
         }
         return this.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.format("Entidad con ID %s no encontrada.", id)));

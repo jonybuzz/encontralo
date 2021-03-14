@@ -1,26 +1,11 @@
 package com.jonybuzz.encontralo.service;
 
 import com.jonybuzz.encontralo.ApplicationTests;
-import com.jonybuzz.encontralo.dto.AnuncioDto;
-import com.jonybuzz.encontralo.dto.ImagenDownloadDto;
-import com.jonybuzz.encontralo.dto.ImagenUploadDto;
-import com.jonybuzz.encontralo.dto.NuevoAnuncioDto;
 import com.jonybuzz.encontralo.dto.SeleccionablesDto;
 import com.jonybuzz.encontralo.model.*;
-import com.jonybuzz.encontralo.repository.AnuncioRepository;
-import com.jonybuzz.encontralo.testutils.builder.AnuncioBuilder;
-import com.jonybuzz.encontralo.testutils.builder.ImagenBuilder;
-import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.jdbc.JdbcTestUtils;
 
-import javax.persistence.EntityManager;
-import java.time.LocalDateTime;
-import java.util.Set;
-
-import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
 

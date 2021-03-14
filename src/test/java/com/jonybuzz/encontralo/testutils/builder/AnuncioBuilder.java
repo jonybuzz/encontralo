@@ -18,6 +18,10 @@ public class AnuncioBuilder extends AbstractPersistenceBuilder<Anuncio> {
         this.instance = new Anuncio();
     }
 
+    public static AnuncioBuilder vacio() {
+        return new AnuncioBuilder();
+    }
+
     public static AnuncioBuilder perro() {
         var builder = new AnuncioBuilder();
         builder.instance.setTipo(TipoAnuncio.PERDIDO);
@@ -101,5 +105,11 @@ public class AnuncioBuilder extends AbstractPersistenceBuilder<Anuncio> {
         this.instance.setFotos(set);
         return this;
     }
+
+    public AnuncioBuilder ahora() {
+        this.instance.setFechaCreacion(LocalDateTime.now());
+        return this;
+    }
+
 
 }
