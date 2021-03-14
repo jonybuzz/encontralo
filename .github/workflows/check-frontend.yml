@@ -27,8 +27,6 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: javascript
-          paths:
-            - 'src/main/frontend'
-
+          paths: src/main/frontend
       - name: Analisis CodeQL
         uses: github/codeql-action/analyze@v1
