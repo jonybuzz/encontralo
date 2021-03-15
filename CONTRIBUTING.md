@@ -6,7 +6,7 @@ cambios para asegurarnos de hacer de esta plataforma el mejor buscador de mascot
 
 ## Herramientas recomendadas
 - IntelliJ Idea o en su defecto Netbeans para el backend
-- Visual Studio Code para el frontend
+- Visual Studio Code para el frontend o WebStorm (pago)
 - DBeaver para crear y consultar la base de datos
 
 ## Issues
@@ -64,6 +64,7 @@ si lo que pensás hacer sirve al proyecto o es la mejor solución. Se trata
 de coordinar los esfuerzos y no perder tiempo en cosas que tal vez no lleguen a
 implementarse. Todos los pull requests **deben estar asociados a un issue
 existente**.
+Para comenzar, te recomiendo visitar la sección Projects y revisar la columna de issues pendientes.
 
 Mantener el código limpio y respetar las convenciones que tiene configuradas (formateo, estilos, cobertura).
 
