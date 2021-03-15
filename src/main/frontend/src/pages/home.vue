@@ -40,90 +40,23 @@
 
     <f7-block-title>Anuncios recientes</f7-block-title>
     <f7-row>
-      <f7-col width="100" medium="33" xlarge="20">
-        <f7-card class="demo-card-header-pic">
-          <f7-card-header
-              class="no-border"
-              valign="bottom"
-              style="
-              background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJe2jzHNs4Ex_L2_Yi6HtpXICEp3PYQjnsNg&usqp=CAU);
-            "
-          >Rocko
-          </f7-card-header
-          >
-          <f7-card-content>
-            <p class="date">Publicado el 21 de enero, 2021</p>
-            <p>Chihuaha, adulto mayor</p>
-            <p>Quilmes, Bs. As.</p>
-          </f7-card-content>
-        </f7-card>
-      </f7-col>
-      <f7-col width="100" medium="33" xlarge="20">
-        <f7-card class="demo-card-header-pic">
-          <f7-card-header
-              class="no-border"
-              valign="bottom"
-              style="
-              background-image: url(https://www.elcomercio.com/files/article_main/uploads/2018/05/16/5afc9aa25b648.jpeg);
-            "
-          >Laila
-          </f7-card-header
-          >
-          <f7-card-content>
-            <p class="date">Publicado el 23 de enero, 2021</p>
-            <p>Sharpei, cachorro</p>
-            <p>Vicente López, Bs. As.</p>
-          </f7-card-content>
-        </f7-card>
-      </f7-col>
-      <f7-col width="100" medium="33" xlarge="20">
-        <f7-card class="demo-card-header-pic">
-          <f7-card-header
-              class="no-border"
-              valign="bottom"
-              style="
-              background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJe2jzHNs4Ex_L2_Yi6HtpXICEp3PYQjnsNg&usqp=CAU);
-            "
-          >Rocko
-          </f7-card-header
-          >
-          <f7-card-content>
-            <p class="date">Publicado el 21 de enero, 2021</p>
-            <p>Chihuaha, adulto mayor</p>
-            <p>Quilmes, Bs. As.</p>
-          </f7-card-content>
-        </f7-card>
-      </f7-col>
-      <f7-col width="100" medium="33" xlarge="20">
-        <f7-card class="demo-card-header-pic">
-          <f7-card-header
-              class="no-border"
-              valign="bottom"
-              style="
-              background-image: url(https://www.elcomercio.com/files/article_main/uploads/2018/05/16/5afc9aa25b648.jpeg);
-            "
-          >Laila
-          </f7-card-header
-          >
-          <f7-card-content>
-            <p class="date">Publicado el 23 de enero, 2021</p>
-            <p>Sharpei, cachorro</p>
-            <p>Vicente López, Bs. As.</p>
-          </f7-card-content>
-        </f7-card>
+      <f7-col v-for="anuncio in anunciosHome" width="100" medium="33" xlarge="20">
+        <AnuncioResumidoCard :anuncio-resumido="anuncio"></AnuncioResumidoCard>
       </f7-col>
     </f7-row>
+
+    <f7-block>
+      <f7-row class="enc-col-center-content">
+        <f7-col width="90" xsmall="90" small="60" medium="33" xlarge="20" class="enc-main-button">
+          <f7-button large href="/buscar" icon-f7="search">Buscar</f7-button>
+        </f7-col>
+      </f7-row>
+    </f7-block>
+
   </f7-page>
 </template>
 
 <style>
-.demo-card-header-pic .card-header {
-  height: 140px;
-  background-size: cover;
-  background-position: center;
-  color: #fff;
-  text-shadow: 0 0 3px #000;
-}
 
 .enc-main-button {
   margin: 12px;
@@ -140,6 +73,7 @@
   background-image: url("/src/static/img/slide_1.jpg");
   background-position: center;
 }
+
 .enc-slide .enc-cta {
   display: none;
 }
@@ -151,9 +85,11 @@
     background-size: cover;
     height: calc(100vh - var(--f7-navbar-height));
   }
+
   .enc-cta {
     display: none;
   }
+
   .enc-slide .enc-cta {
     display: block;
   }
@@ -166,3 +102,28 @@
 }
 
 </style>
+<script>
+import AnuncioResumidoCard from "../components/anuncioResumidoCard";
+import requests from "../js/requests/requests";
+import anuncio from "../js/requests/anuncio";
+
+export default {
+  name: 'home',
+  displayName: 'Inicio',
+  components: {AnuncioResumidoCard},
+  data() {
+    return {
+      anunciosHome: []
+    }
+  },
+  mounted() {
+    const self = this;
+    anuncio.obtenerAnunciosHome()
+        .then(anunciosResponse => {
+          console.log(anunciosResponse);
+          self.anunciosHome = anunciosResponse.data.content;
+        })
+  },
+
+}
+</script>

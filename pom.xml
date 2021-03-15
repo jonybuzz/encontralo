@@ -9,7 +9,7 @@
     </parent>
     <groupId>com.jonybuzz</groupId>
     <artifactId>encontralo</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <name>Encontralo</name>
     <description>Web para reunir dueños con mascotas perdidas</description>
     <url>https://github.com/jonybuzz/encontralo</url>

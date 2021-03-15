@@ -18,6 +18,9 @@
   import routes from '../js/routes.js';
   import store from '../js/store';
 
+  import moment from 'moment';
+  moment.locale('es');
+
   export default {
     setup() {
 

@@ -8,6 +8,7 @@ const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 const path = require('path');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 
 function resolvePath(dir) {
   return path.join(__dirname, '..', dir);
@@ -209,6 +210,10 @@ module.exports = {
 
     new WorkboxPlugin.InjectManifest({
       swSrc: resolvePath('src/service-worker.js'),
+    }),
+
+    new MomentLocalesPlugin({
+      localesToKeep: ['es'],
     }),
   ],
 };
