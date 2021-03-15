@@ -26,9 +26,9 @@ public class AnuncioRestController {
     }
 
     @GetMapping("/api/anuncios")
-    public Page<AnuncioResumidoDto> obtenerAnuncio(
-            @RequestParam TipoAnuncio tipoAnuncio,
-            @RequestParam Integer especieId,
+    public Page<AnuncioResumidoDto> buscarAnunciosResumidos(
+            @RequestParam(required = false) TipoAnuncio tipoAnuncio,
+            @RequestParam(required = false) Integer especieId,
             @RequestParam(defaultValue = "1") Integer pagina) {
         FiltroAnuncios filtro = new FiltroAnuncios(tipoAnuncio, especieId, pagina);
         return anuncioService.buscarAnunciosResumidos(filtro);

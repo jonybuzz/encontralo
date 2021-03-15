@@ -138,6 +138,24 @@ class AnuncioServiceTests extends ApplicationTests {
     }
 
     @Test
+    void buscarAnunciosResumidos_recibeFiltroVacio_devuelveTodos() {
+        var filtro = new FiltroAnuncios();
+        filtro.setPagina(1);
+        Imagen fotoPerro2 = ImagenBuilder.vacia().build();
+        Imagen fotoPerro = ImagenBuilder.vacia().build();
+        AnuncioBuilder.perro().perdido().conFotos(fotoPerro, fotoPerro2).build(em); //OK
+        AnuncioBuilder.gato().perdido().build(em);
+        AnuncioBuilder.perro().encontrado().build(em);
+        AnuncioBuilder.gato().encontrado().build(em);
+        AnuncioBuilder.datosMinimos().encontrado().build(em);
+        AnuncioBuilder.datosMinimos().razaPerro().perdido().build(em); //OK
+        //Ejecucion
+        var paginaAnuncios = anuncioService.buscarAnunciosResumidos(filtro);
+        assertThat(paginaAnuncios).isNotEmpty();
+        assertThat(paginaAnuncios.getTotalElements()).isEqualTo(6);
+    }
+
+    @Test
     void buscarAnunciosResumidos_encuentraAnuncioConPocosDatos_deveuelveAnuncio() {
         AnuncioBuilder.vacio().encontrado().ahora().build(em);
         var filtro = new FiltroAnuncios();
