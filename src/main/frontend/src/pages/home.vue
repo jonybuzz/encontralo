@@ -45,7 +45,7 @@
       </f7-col>
     </f7-row>
 
-    <f7-block>
+    <f7-block :hidden="anunciosHome.length === 0">
       <f7-row class="enc-col-center-content">
         <f7-col width="90" xsmall="90" small="60" medium="33" xlarge="20" class="enc-main-button">
           <f7-button large href="/buscar" icon-f7="search">Buscar</f7-button>
@@ -104,7 +104,6 @@
 </style>
 <script>
 import AnuncioResumidoCard from "../components/anuncioResumidoCard";
-import requests from "../js/requests/requests";
 import anuncio from "../js/requests/anuncio";
 
 export default {
