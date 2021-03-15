@@ -1,12 +1,11 @@
 package com.jonybuzz.encontralo;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class ApplicationTests {
+import javax.transaction.Transactional;
 
-    @Test
-    void contextLoads() {
-    }
+@SpringBootTest
+@Transactional
+public abstract class ApplicationTests {
+
 }

@@ -1,5 +1,5 @@
 {
-  "cwd": "/Users/jonathan.buzzetti/Documents/Proyectos/encontralo/src/main/frontend",
+  "cwd": ".",
   "type": [
     "pwa",
     "web"
@@ -19,7 +19,7 @@
   "theming": {
     "customColor": true,
     "color": "#4c00ff",
-    "darkTheme": false,
+    "darkTheme": true,
     "iconFonts": true,
     "fillBars": false
   },

@@ -7,3 +7,28 @@
 }
 
 /* Your app custom styles here */
+
+//Modificaciones generales al tema
+
+.list {
+  margin-top: calc(var(--f7-list-margin-vertical) - 10px);
+}
+
+//Clases custom
+.enc-logo {
+  font-family: 'Grandstander', sans-serif;
+  font-weight: 200 !important;
+  color: var(--f7-theme-color-shade);
+  img {
+    height: var(--f7-navbar-title-line-height);
+  }
+  .strong {
+    font-weight: 400;
+  }
+}
+
+.enc-col-center-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

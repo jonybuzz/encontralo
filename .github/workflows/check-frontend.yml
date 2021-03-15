@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: Check frontend
 
 on:
   push:
@@ -27,8 +27,6 @@ jobs:
         uses: github/codeql-action/init@v1
         with:
           languages: javascript
-          paths:
-            - 'src/main/frontend'
-
+          path: src/main/frontend
       - name: Analisis CodeQL
         uses: github/codeql-action/analyze@v1

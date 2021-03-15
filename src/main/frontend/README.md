@@ -1,9 +1,13 @@
 # Encontralo.com.ar - Frontend
 
+El proyecto de backend, durante el build, compila e incluye los recursos del frontend dentro del JAR.
+Aunque para desarrollo, el frontend puede correrse independientemente siguiendo las instrucciones de más abajo.
+
 ## Instalación
 - Primero tenés que instalar [NPM](https://www.npmjs.com/get-npm)
 - Luego, instalar la herramienta CLI de [Framework7](https://framework7.io): `npm install -g framework7-cli`
 - Para probarlo, iniciá el backend en http://localhost:8080 y ejecutá `npm install` y `npm run dev` en este directorio
+
 ## Framework7 CLI Options
 
 Framework7 app created with following options:

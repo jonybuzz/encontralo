@@ -1,68 +1,128 @@
 <template>
   <f7-page name="home">
     <!-- Top Navbar -->
-    <f7-navbar large :sliding="false">
-      <f7-nav-left>
-        <f7-link icon-ios="f7:menu" icon-aurora="f7:menu" icon-md="material:menu" panel-open="left"></f7-link>
-      </f7-nav-left>
-      <f7-nav-title sliding>Encontralo</f7-nav-title>
-      <f7-nav-right>
-        <f7-link icon-ios="f7:menu" icon-aurora="f7:menu" icon-md="material:menu" panel-open="right"></f7-link>
-      </f7-nav-right>
-      <f7-nav-title-large>Encontralo</f7-nav-title-large>
+    <f7-navbar>
+      <f7-nav-title class="enc-logo">
+        <img alt="Logo" src="/static/icons/128x128.png" width="20"/> <strong>Encontralo</strong>.com.ar
+      </f7-nav-title>
     </f7-navbar>
-    <!-- Toolbar-->
-    <f7-toolbar bottom>
-      <f7-link>Left Link</f7-link>
-      <f7-link>Right Link</f7-link>
-    </f7-toolbar>
+
     <!-- Page content-->
-    <f7-block strong>
-      <p>Here is your blank Framework7 app. Let's see what we have here.</p>
-    </f7-block>
-    <f7-block-title>Navigation</f7-block-title>
-    <f7-list>
-      <f7-list-item link="/about/" title="About"></f7-list-item>
-      <f7-list-item link="/form/" title="Form"></f7-list-item>
-    </f7-list>
+    <f7-swiper>
+      <f7-swiper-slide class="enc-slide">
+        El buscador Nº1 de mascotas perdidas
+        <f7-row class="enc-col-center-content hide-">
+          <f7-col width="90" xsmall="90" small="60" medium="33" xlarge="20" class="enc-main-button">
+            <f7-button large fill raised href="/anunciar-perdido" class="enc-cta">Anunciar perdido</f7-button>
+          </f7-col>
+        </f7-row>
+      </f7-swiper-slide>
+    </f7-swiper>
 
-    <f7-block-title>Modals</f7-block-title>
-    <f7-block strong>
-      <f7-row>
-        <f7-col width="50">
-          <f7-button fill raised popup-open="#my-popup">Popup</f7-button>
+    <f7-block>
+      <f7-row class="enc-col-center-content">
+        <f7-col width="90" xsmall="90" small="60" medium="33" xlarge="20" class="enc-main-button">
+          <f7-button large fill raised href="/anunciar-perdido" class="enc-cta">Anunciar perdido</f7-button>
         </f7-col>
-        <f7-col width="50">
-          <f7-button fill raised login-screen-open="#my-login-screen">Login Screen</f7-button>
+        <f7-col width="90" xsmall="90" small="60" medium="33" xlarge="20" class="enc-main-button">
+          <f7-button large fill raised href="/anunciar-encontrado">Anunciar encontrado</f7-button>
         </f7-col>
       </f7-row>
     </f7-block>
 
-    <f7-block-title>Panels</f7-block-title>
-    <f7-block strong>
-      <f7-row>
-        <f7-col width="50">
-          <f7-button fill raised panel-open="left">Left Panel</f7-button>
-        </f7-col>
-        <f7-col width="50">
-          <f7-button fill raised panel-open="right">Right Panel</f7-button>
+    <f7-block>
+      <f7-row class="enc-col-center-content">
+        <f7-col width="90" xsmall="90" small="60" medium="33" xlarge="20" class="enc-main-button">
+          <f7-button large href="/buscar" icon-f7="search">Buscar</f7-button>
         </f7-col>
       </f7-row>
     </f7-block>
 
-    <f7-list>
-      <f7-list-item
-        title="Dynamic (Component) Route"
-        link="/dynamic-route/blog/45/post/125/?foo=bar#about"
-      ></f7-list-item>
-      <f7-list-item
-        title="Default Route (404)"
-        link="/load-something-that-doesnt-exist/"
-      ></f7-list-item>
-      <f7-list-item
-        title="Request Data & Load"
-        link="/request-and-load/user/123456/"
-      ></f7-list-item>
-    </f7-list>
+    <f7-block-title>Anuncios recientes</f7-block-title>
+    <f7-row>
+      <f7-col v-for="anuncio in anunciosHome" width="100" medium="33" xlarge="20">
+        <AnuncioResumidoCard :anuncio-resumido="anuncio"></AnuncioResumidoCard>
+      </f7-col>
+    </f7-row>
+
+    <f7-block :hidden="anunciosHome.length === 0">
+      <f7-row class="enc-col-center-content">
+        <f7-col width="90" xsmall="90" small="60" medium="33" xlarge="20" class="enc-main-button">
+          <f7-button large href="/buscar" icon-f7="search">Buscar</f7-button>
+        </f7-col>
+      </f7-row>
+    </f7-block>
+
   </f7-page>
 </template>
+
+<style>
+
+.enc-main-button {
+  margin: 12px;
+}
+
+.enc-slide {
+  text-align: center;
+  font-size: 2em;
+  line-height: 350px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  color: white;
+  text-shadow: 0 0 3px #000;
+  background-image: url("/src/static/img/slide_1.jpg");
+  background-position: center;
+}
+
+.enc-slide .enc-cta {
+  display: none;
+}
+
+@media only screen and (max-width: 568px) {
+  .enc-slide {
+    line-height: 230px;
+    background-image: url("/src/static/img/slide_1_mobile.jpg");
+    background-size: cover;
+    height: calc(100vh - var(--f7-navbar-height));
+  }
+
+  .enc-cta {
+    display: none;
+  }
+
+  .enc-slide .enc-cta {
+    display: block;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .enc-slide {
+    background-size: cover;
+  }
+}
+
+</style>
+<script>
+import AnuncioResumidoCard from "../components/anuncioResumidoCard";
+import anuncio from "../js/requests/anuncio";
+
+export default {
+  name: 'home',
+  displayName: 'Inicio',
+  components: {AnuncioResumidoCard},
+  data() {
+    return {
+      anunciosHome: []
+    }
+  },
+  mounted() {
+    const self = this;
+    anuncio.obtenerAnunciosHome()
+        .then(anunciosResponse => {
+          console.log(anunciosResponse);
+          self.anunciosHome = anunciosResponse.data.content;
+        })
+  },
+
+}
+</script>
