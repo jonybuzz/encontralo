@@ -10,6 +10,7 @@ on:
       - '**/*.png'
       - '**/*.js'
       - '**/*.json'
+      - '**/*.xml'
   pull_request:
     branches:
       - main
