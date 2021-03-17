@@ -14,10 +14,16 @@ Si querés ayudarnos, ésta es la [guía para contribuir](CONTRIBUTING.md)
 
 El ejecutable de la aplicación es un JAR que contiene todo lo necesario para correr. El frontend maneja el código como un proyecto independiente y está ubicado en [/src/main/frontend](/src/main/frontend). Al momento de empaquetar el JAR, se compila el frontend y se incluye dentro.
 
-# Getting Started
+# Empezar
 
-### Reference Documentation
-For further reference, please consider the following sections:
+1. Crear una base de datos MySQL con el nombre `encontralo`, accesible por root:root
+2. Si estás usando IntelliJ, ejecutar la config "Boot local". 
+   Si usás otro IDE, configurar la variable de entorno `SPRING_PROFILES_ACTIVE=local` y ejecutar ./mvnw spring-boot:run
+3. Para cargar algunos datos de pruebas, ejecutar el [SQL de test](/src/test/resources/db/migration/V999__data.sql) en la base de datos
+
+El desarrollo debe hacerse localmente porque aún no contamos con un entorno remoto para eso.
+
+### Tecnologías
 
 * [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
 * [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.4.2/maven-plugin/reference/html/)
@@ -41,3 +47,6 @@ The following guides illustrate how to use some features concretely:
 * [Authenticating a User with LDAP](https://spring.io/guides/gs/authenticating-ldap/)
 * [Building a RESTful Web Service with Spring Boot Actuator](https://spring.io/guides/gs/actuator-service/)
 
+### Frontend
+
+Ver [README](/src/main/frontend/README.md) del frontend
