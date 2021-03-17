@@ -1,4 +1,5 @@
 import HomePage from '../pages/home.vue';
+import AnunciarEncontrado from '../pages/anunciarEncontrado.vue';
 import AnunciarPerdido from '../pages/anunciarPerdido.vue';
 
 
@@ -12,6 +13,10 @@ var routes = [
     {
         path: '/anunciar-perdido',
         component: AnunciarPerdido
+    },
+    {
+        path: '/anunciar-encontrado',
+        component: AnunciarEncontrado
     },
     {
         path: '(.*)',
