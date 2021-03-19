@@ -2,7 +2,6 @@ package com.jonybuzz.encontralo.testutils.builder;
 
 import com.jonybuzz.encontralo.model.*;
 import com.somospnt.test.builder.AbstractPersistenceBuilder;
-
 import java.math.BigDecimal;
 import java.util.Set;
 
