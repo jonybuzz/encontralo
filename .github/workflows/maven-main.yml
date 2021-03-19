@@ -11,16 +11,6 @@ on:
       - '**/*.js'
       - '**/*.json'
       - '**/*.xml'
-  pull_request:
-    branches:
-      - main
-    types: [opened, synchronize, reopened]
-    paths-ignore:
-      - '**/*.md'
-      - '**/*.txt'
-      - '**/*.png'
-      - '**/*.js'
-      - '**/*.json'
 jobs:
   build:
     name: Build y Analisis
