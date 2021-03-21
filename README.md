@@ -6,7 +6,7 @@ Web que reúne mascotas perdidas con sus dueños. Roadmap: https://github.com/jo
 
 ## :star: Cómo contribuir
 
-Si querés ayudarnos, ésta es la [guía para contribuir](CONTRIBUTING.md)
+Si querés ayudarnos, ésta es la [guía para contribuir](CONTRIBUTING.md). También podés sumarte al [espacio de Slack](https://join.slack.com/t/encontralocomar/shared_invite/zt-noxjiquf-WVX30v3MB8v_ChKHAC~OYQ) para ver en qué andamos o hacer consultas
 
 ## :rocket: Empezar
 
