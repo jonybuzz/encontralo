@@ -1,15 +1,6 @@
-name: Java CI with Maven
+name: Java CI with Maven for PR
 
 on:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - '**/*.md'
-      - '**/*.txt'
-      - '**/*.png'
-      - '**/*.js'
-      - '**/*.json'
   pull_request:
     branches:
       - main
@@ -33,14 +24,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v1
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-      
+            
       - name: Cache Maven packages
         uses: actions/cache@v1
         with:
@@ -53,11 +37,10 @@ jobs:
         with:
           languages: java
 
-      - name: Build + Sonar
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=encontralo -Dsonar.organization=jonybuzz -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
+      - name: Build
+        run: mvn -B verify
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Analisis CodeQL
         uses: github/codeql-action/analyze@v1

@@ -3,6 +3,7 @@
 Por favor, tomate unos minutos para leer estos lineamientos y así facilitar el proceso de contribución.
 Se agradece el tiempo empleado, pero hay unas reglas de generación y aprobación de
 cambios para asegurarnos de hacer de esta plataforma el mejor buscador de mascotas perdidas!
+Si te quedaste con alguna duda, podés sumarte al [espacio de Slack](https://join.slack.com/t/encontralocomar/shared_invite/zt-noxjiquf-WVX30v3MB8v_ChKHAC~OYQ)
 
 ## Herramientas recomendadas
 - IntelliJ Idea o en su defecto Netbeans para el backend
@@ -80,7 +81,7 @@ Pasos a seguir:
    git remote add upstream https://github.com/jonybuzz/encontralo
    ```
 
-2. Si pasó bastante tiempo del clone, actualizar:
+2. (Opcional) Si pasó bastante tiempo del clone, actualizar:
 
    ```bash
    git checkout main
@@ -90,26 +91,26 @@ Pasos a seguir:
 3. Crear un branch de la funcionalidad o fix:
 
    ```bash
-   git checkout -b <topic-branch-name>
+   git checkout -b <nombre-feature>
    ```
 
 4. Hacer commits con mensajes descriptivos de lo que se fue desarrollando. Va a
    permitir que entendamos mejor y más rápido los cambios
 
-5. Mergear localmente el branch main original hacia tu branch de desarrollo para
+5. (Opcional) Mergear localmente el branch main original hacia tu branch de desarrollo para
    traerte los últimos cambios:
 
    ```bash
    git pull [--rebase] upstream main
    ```
 
-6. Pushear tu branch hacia el fork:
+6. Actualizar el branch de tu fork:
 
    ```bash
-   git push origin <topic-branch-name>
+   git push origin <nombre-feature>
    ```
 
-7. Crear un Pull Request en el repo origianl haciendo referencia al issue:
+7. Crear un Pull Request en el repo original haciendo referencia al issue:
    en la descripción poner "resolves #45" si resolviera el issue Nº 45
 
 **IMPORTANTE**: _Todo lo que se suba adhiere a la política Open Source del proyecto._

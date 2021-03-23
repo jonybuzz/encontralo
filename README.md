@@ -1,23 +1,37 @@
-# encontralo.com.ar
+
+
+<h1> <img alt="logo" src="src/main/frontend/assets-src/web-icon.png" height="35"/> encontralo.com.ar </h1>
 
 Web que reúne mascotas perdidas con sus dueños. Roadmap: https://github.com/jonybuzz/encontralo/projects/1
 
-Si querés ayudarnos, ésta es la [guía para contribuir](CONTRIBUTING.md)
+## :star: Cómo contribuir
 
-## Diseño
+Si querés ayudarnos, ésta es la [guía para contribuir](CONTRIBUTING.md). También podés sumarte al [espacio de Slack](https://join.slack.com/t/encontralocomar/shared_invite/zt-noxjiquf-WVX30v3MB8v_ChKHAC~OYQ) para ver en qué andamos o hacer consultas
+
+## :rocket: Empezar
+
+1. Crear una base de datos MySQL con el nombre `encontralo`, accesible por root:root
+2. Si estás usando IntelliJ, ejecutar la config "Boot local". 
+   Si usás otro IDE, configurar la variable de entorno `SPRING_PROFILES_ACTIVE=local` y ejecutar ./mvnw spring-boot:run
+3. Para cargar algunos datos de pruebas, ejecutar el [SQL de test](/src/test/resources/db/migration/V999__data.sql) en la base de datos
+
+El desarrollo debe hacerse localmente porque aún no contamos con un entorno remoto para eso.
+
+## :page_facing_up: Diseño
+
+:arrow_upper_right: <a href="https://app.diagrams.net/#Hjonybuzz%2Fencontralo%2Fmain%2Fdocumentacion%2Fdiagrama-clases.svg" target="_blank">Diagrama de clases</a>
 
 ![Diseño](documentacion/diagrama-despliegue.svg)
 
-<a href="https://app.diagrams.net/#Hjonybuzz%2Fencontralo%2Fmain%2Fdocumentacion%2Fdiagrama-despliegue.svg" target="_blank">Editar en diagrams.net</a>
-
-<a href="https://app.diagrams.net/#Hjonybuzz%2Fencontralo%2Fmain%2Fdocumentacion%2Fdiagrama-clases.svg" target="_blank">Diagrama de clases</a>
+:arrow_upper_right: <a href="https://app.diagrams.net/#Hjonybuzz%2Fencontralo%2Fmain%2Fdocumentacion%2Fdiagrama-despliegue.svg" target="_blank">Editar en diagrams.net</a>
 
 El ejecutable de la aplicación es un JAR que contiene todo lo necesario para correr. El frontend maneja el código como un proyecto independiente y está ubicado en [/src/main/frontend](/src/main/frontend). Al momento de empaquetar el JAR, se compila el frontend y se incluye dentro.
 
-# Getting Started
+## :art: Frontend
 
-### Reference Documentation
-For further reference, please consider the following sections:
+Ver [README](/src/main/frontend/README.md) del frontend
+
+## :floppy_disk: Tecnologías
 
 * [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
 * [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.4.2/maven-plugin/reference/html/)
@@ -29,8 +43,7 @@ For further reference, please consider the following sections:
 * [Spring Boot Actuator](https://docs.spring.io/spring-boot/docs/2.4.2/reference/htmlsingle/#production-ready)
 * [Spring Boot DevTools](https://docs.spring.io/spring-boot/docs/2.4.2/reference/htmlsingle/#using-boot-devtools)
 
-### Guides
-The following guides illustrate how to use some features concretely:
+### :book: Guías oficiales
 
 * [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
 * [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
@@ -40,4 +53,3 @@ The following guides illustrate how to use some features concretely:
 * [Securing a Web Application](https://spring.io/guides/gs/securing-web/)
 * [Authenticating a User with LDAP](https://spring.io/guides/gs/authenticating-ldap/)
 * [Building a RESTful Web Service with Spring Boot Actuator](https://spring.io/guides/gs/actuator-service/)
-
