@@ -33,15 +33,17 @@
             <option value="HEMBRA">Hembra</option>
           </f7-list-input>
 
-          <f7-list-input
-              label="Raza*"
-              type="select"
-              placeholder="Seleccionar..."
-              v-model:value="razaId"
-          >
-            <option value="0" selected disabled>Seleccionar...</option>
-            <option v-for="raza in razas" :key="raza.id" :value="raza.id">{{ raza.nombre }}</option>
-          </f7-list-input>
+          <f7-list-item
+              title="Raza*"
+              smart-select
+              :smart-select-params="{searchbar: {removeDiacritics: true}, searchbarPlaceholder: 'Buscar...', closeOnSelect: true, virtualList: true}">
+            <select name="razaId" v-model="razaId">
+              <option value="0" selected disabled></option>
+              <option v-for="raza in razas" :key="raza.id" :value="raza.id">
+                {{ raza.nombre }}
+              </option>
+            </select>
+          </f7-list-item>
 
           <f7-list-input
               label="Tamaño*"
@@ -96,7 +98,7 @@
           <f7-list-item
               title="Localidad*"
               smart-select
-              :smart-select-params="{searchbar: true, searchbarPlaceholder: 'Buscar...', closeOnSelect: true, virtualList: true}">
+              :smart-select-params="{searchbar: {removeDiacritics: true}, searchbarPlaceholder: 'Buscar...', closeOnSelect: true, virtualList: true}">
             <select name="localidadId" v-model="localidadId">
               <option value="0" selected disabled></option>
               <option v-for="localidad in seleccionables.localidades" :key="localidad.id" :value="localidad.id">
