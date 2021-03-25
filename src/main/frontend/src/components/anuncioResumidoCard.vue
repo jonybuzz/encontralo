@@ -30,6 +30,7 @@ export default {
   },
   computed: {
     fechaCreacionFormateado() {
+      console.dir(this.anuncioResumido)
       return moment(this.anuncioResumido.fechaCreacion).calendar()
     },
     headerStyle() {
