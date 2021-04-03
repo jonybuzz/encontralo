@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,10 +18,12 @@ import java.util.Set;
 @AllArgsConstructor
 public class NuevoAnuncioDto {
 
+    @NotNull(message = "tipo")
     private TipoAnuncio tipo;
 
     private String nombreMascota;
 
+    @NotNull(message = "especie")
     private Integer especieId;
 
     private Integer razaId;
@@ -38,10 +42,12 @@ public class NuevoAnuncioDto {
 
     private Set<ImagenUploadDto> fotos = new HashSet<>();
 
+    @NotNull(message = "localidad")
     private Integer localidadId;
 
     private String comentario;
 
+    @NotNull(message = "telefono")
     private String telefonoContacto;
 
 }

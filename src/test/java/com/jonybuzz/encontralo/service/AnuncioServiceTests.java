@@ -12,7 +12,6 @@ import com.jonybuzz.encontralo.model.Imagen;
 import com.jonybuzz.encontralo.model.Sexo;
 import com.jonybuzz.encontralo.model.TipoAnuncio;
 import com.jonybuzz.encontralo.repository.AnuncioRepository;
-import com.jonybuzz.encontralo.service.exception.AnuncioIncompletoException;
 import com.jonybuzz.encontralo.testutils.builder.AnuncioBuilder;
 import com.jonybuzz.encontralo.testutils.builder.ImagenBuilder;
 import lombok.SneakyThrows;
@@ -80,31 +79,6 @@ class AnuncioServiceTests extends ApplicationTests {
         assertThat(anuncioPersistido.getNombreMascotaNormalizado()).isNull();
         assertThat(anuncioPersistido.getFotos()).isEmpty();
         assertThat(anuncioPersistido.getTelefonoContacto()).isEqualTo("21223");
-    }
-
-    @Test
-    @SneakyThrows
-    void crearAnuncio_datosVacios_lanzaExcepcion() {
-
-        NuevoAnuncioDto nuevoAnuncioDto = new NuevoAnuncioDto();
-        nuevoAnuncioDto.setTipo(TipoAnuncio.PERDIDO);
-        nuevoAnuncioDto.setEspecieId(1);
-        nuevoAnuncioDto.setLocalidadId(2);
-        //Ejecucion
-        assertThatThrownBy(() -> anuncioService.crearAnuncio(nuevoAnuncioDto))
-                .isInstanceOf(AnuncioIncompletoException.class)
-                .hasMessage("Faltan completar el campo telefono");
-    }
-
-    @Test
-    @SneakyThrows
-    void crearAnuncio_faltaAlgunDato_lanzaExcepcion() {
-
-        NuevoAnuncioDto nuevoAnuncioDto = new NuevoAnuncioDto();
-        //Ejecucion
-        assertThatThrownBy(() -> anuncioService.crearAnuncio(nuevoAnuncioDto))
-                .isInstanceOf(AnuncioIncompletoException.class)
-                .hasMessage("Faltan completar los campos: tipo, especie, localidad, telefono");
     }
 
     @Test

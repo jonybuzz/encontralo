@@ -16,7 +16,6 @@ import com.jonybuzz.encontralo.repository.LocalidadRepository;
 import com.jonybuzz.encontralo.repository.PelajeRepository;
 import com.jonybuzz.encontralo.repository.RazaRepository;
 import com.jonybuzz.encontralo.repository.TamanioRepository;
-import com.jonybuzz.encontralo.service.exception.AnuncioIncompletoException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -28,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -58,10 +56,8 @@ public class AnuncioService {
     private LocalidadRepository localidadRepository;
 
     @Transactional
-    public Long crearAnuncio(NuevoAnuncioDto dto) throws AnuncioIncompletoException {
-
+    public Long crearAnuncio(NuevoAnuncioDto dto) {
         Anuncio anuncio = new Anuncio();
-        validarNuevoAnuncio(dto);
         anuncio.setTipo(dto.getTipo());
         anuncio.setNombreMascota(StringUtils.normalizeSpace(dto.getNombreMascota()));
         anuncio.setNombreMascotaNormalizado(this.normalizarNombre(dto.getNombreMascota()));
@@ -100,28 +96,6 @@ public class AnuncioService {
     public AnuncioDto obtenerAnuncio(Long anuncioId) {
         return anuncioToDto(anuncioRepository.findById(anuncioId)
                 .orElseThrow(() -> new NoSuchElementException("El anuncio #" + anuncioId + " no existe.")));
-    }
-
-    private void validarNuevoAnuncio(NuevoAnuncioDto dto) throws AnuncioIncompletoException {
-        List<String> camposFaltantes = new ArrayList<>();
-        if (dto.getTipo() == null) {
-            camposFaltantes.add("tipo");
-        }
-        if (dto.getEspecieId() == null) {
-            camposFaltantes.add("especie");
-        }
-        if (dto.getLocalidadId() == null) {
-            camposFaltantes.add("localidad");
-        }
-        if (dto.getTelefonoContacto() == null) {
-            camposFaltantes.add("telefono");
-        }
-        if (camposFaltantes.size() == 1) {
-            throw new AnuncioIncompletoException("Faltan completar el campo " + camposFaltantes.get(0));
-        }
-        if (camposFaltantes.size() > 1) {
-            throw new AnuncioIncompletoException("Faltan completar los campos: " + String.join(", ", camposFaltantes));
-        }
     }
 
     private String normalizarNombre(String str) {
