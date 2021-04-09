@@ -2,14 +2,17 @@ CREATE TABLE raza (
   id INT AUTO_INCREMENT,
   nombre VARCHAR(64) NOT NULL,
   especie_id INT NOT NULL,
-  CONSTRAINT raza_pk PRIMARY KEY (id)
+  CONSTRAINT raza_pk PRIMARY KEY (id),
+  CONSTRAINT raza_uq UNIQUE (nombre, especie_id)
 );
 
 CREATE TABLE color (
   id INT AUTO_INCREMENT,
   nombre VARCHAR(64) NOT NULL,
   codigo_hex VARCHAR(6) NOT NULL,
-  CONSTRAINT color_pk PRIMARY KEY (id)
+  CONSTRAINT color_pk PRIMARY KEY (id),
+  CONSTRAINT color_uq UNIQUE (nombre),
+  CONSTRAINT color_hex_uq UNIQUE (codigo_hex)
 );
 
 CREATE TABLE imagen (
@@ -23,7 +26,8 @@ CREATE TABLE localidad (
   id INT AUTO_INCREMENT,
   nombre VARCHAR(64) NOT NULL,
   provincia VARCHAR(64) NOT NULL,
-  CONSTRAINT localidad_pk PRIMARY KEY (id)
+  CONSTRAINT localidad_pk PRIMARY KEY (id),
+  CONSTRAINT localidad_uq UNIQUE (nombre, provincia)
 );
 
 CREATE TABLE anuncio (
