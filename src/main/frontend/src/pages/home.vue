@@ -120,7 +120,12 @@ export default {
     anuncio.obtenerAnunciosHome()
         .then(anunciosResponse => {
           console.log(anunciosResponse);
-          self.anunciosHome = anunciosResponse.data.content;
+          self.anunciosHome = anunciosResponse.data.content.map((val) => {
+            if (val.fotoPrincipal) {
+              val.fotoPrincipal.url = process.env.BACK_URL + val.fotoPrincipal.url
+            }
+            return val
+          });
         })
   },
 

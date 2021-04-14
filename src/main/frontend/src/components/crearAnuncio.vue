@@ -26,9 +26,7 @@
             <f7-list-item-cell>
               <f7-row class="enc-col-center-content">
                 <f7-col>
-                  <form action="/upload-target" class="dropzone">
-
-                  </form>
+                  <selector-fotos v-on:fotoCargada="agregarFotoAlAnuncio"></selector-fotos>
                 </f7-col>
               </f7-row>
             </f7-list-item-cell>
@@ -154,89 +152,20 @@
 </template>
 
 <script>
-import {onMounted} from 'vue'
 import {f7, useStore} from 'framework7-vue'
 import requestsAnuncio from './../js/requests/anuncio'
-import Dropzone from 'dropzone'
+import SelectorFotos from './selectorFotos'
 
 export default {
   name: "crearAnuncio.vue",
   props: {
     tipoAnuncio: String
   },
+  components: {
+    SelectorFotos
+  },
   setup() {
     const seleccionables = useStore('seleccionables');
-
-    onMounted(() => {
-      Dropzone.autoDiscover = false;
-      let myDropzone = new Dropzone(".dropzone", {
-        dictDefaultMessage: "Subir fotos...",
-        maxFiles: 3,
-        maxFilesize: 4, //MB
-        acceptedFiles: 'image/*',
-        addRemoveLinks: true,
-        dictRemoveFile: 'Eliminar',
-        dictMaxFilesExceeded: 'Se aceptan hasta {{maxFiles}} fotos',
-        dictCancelUpload: 'Cancelar',
-        dictInvalidFileType: 'El tipo de archivo no es aceptado',
-        dictFileTooBig: 'La foto es muy grande ({{filesize}}MB). Máximo: {{maxFilesize}}MB.',
-        accept: localAcceptHandler
-      });
-
-      function localAcceptHandler(file, done) {
-        this._sendIntercept(file).then(result => {
-          file.contents = result;
-          if(typeof this.localSuccess === 'function') {
-            this.localSuccess(file, done);
-          } else {
-            done(); // empty done signals success
-          }
-        }).catch(result => {
-          if(typeof this.localFailure  === 'function') {
-            file.contents = result;
-            this.localFailure(file, done);
-          } else {
-            done(`Failed to download file ${file.name}`);
-            console.error(result)
-            console.warn(file);
-          }
-        });
-      }
-
-      myDropzone.localSuccess = function(file, done){
-        console.dir(file)
-        done()
-      }
-      myDropzone.submitRequest = function(xhr, formData, files) {
-        this._finished(files,'locally resolved, refer to "contents" property');
-      };
-
-      myDropzone._sendIntercept = function(file, options={}) {
-        return new Promise((resolve,reject) => {
-          if(!options.readType) {
-            const mime = file.type;
-            const _textTypes = ['text/*', 'application/xml', 'application/x-sh', 'application/x-script', 'image/svg+xml'];
-            const textType = _textTypes.find(type => {
-              const regexp = new RegExp(type);
-              return regexp.test(mime);
-            });
-            options.readType = textType ? 'readAsText' : 'readAsDataURL';
-          }
-          let reader = new window.FileReader();
-          reader.onload = () => {
-            resolve(reader.result);
-          };
-          reader.onerror = () => {
-            reject(reader.result);
-          };
-          // run the reader
-          reader[options.readType](file);
-        });
-      }
-
-
-    });
-
     return {
       seleccionables
     }
@@ -256,9 +185,7 @@ export default {
       telefonoContacto: '',
       nombreMascota: '',
       comentario: '',
-      dropOptions: {
-        url: "https://httpbin.org/post"
-      }
+      fotos: []
     };
   },
   computed: {
@@ -299,7 +226,10 @@ export default {
         pelajeId: orNull(self.pelajeId),
         localidadId: orNull(self.localidadId),
         comentario: orNull(self.comentario),
-        telefonoContacto: orNull(self.telefonoContacto)
+        telefonoContacto: orNull(self.telefonoContacto),
+        fotos: self.fotos.map((val, i) => {
+          return {posicion: i + 1, datosBase64: val}
+        })
       }
       console.dir(nuevoAnuncio)
       requestsAnuncio.crear(nuevoAnuncio)
@@ -327,6 +257,9 @@ export default {
         arr.splice(arr.indexOf("0"), 1)
         return arr
       }
+    },
+    agregarFotoAlAnuncio(file) {
+      this.fotos.push(file.contents.split(',')[1])
     }
   }
 }
@@ -334,5 +267,4 @@ export default {
 </script>
 
 <style scoped>
-@import '../../node_modules/dropzone/dist/dropzone.css';
 </style>
