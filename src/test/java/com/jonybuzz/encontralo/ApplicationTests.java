@@ -1,5 +1,6 @@
 package com.jonybuzz.encontralo;
 
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.FileCopyUtils;
@@ -10,6 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 @SpringBootTest
+@AutoConfigureMockMvc
 @Transactional
 public abstract class ApplicationTests {
 
