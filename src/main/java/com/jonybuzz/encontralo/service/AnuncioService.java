@@ -38,6 +38,7 @@ public class AnuncioService {
 
     public static final int PAGE_SIZE = 15;
     public static final String PATH_DESCARGA_IMAGENES = "imagenes";
+    private static final int IMAGE_SIZE_MAX = 4;
     @Autowired
     private AnuncioRepository anuncioRepository;
     @Autowired
@@ -58,6 +59,8 @@ public class AnuncioService {
     @Transactional
     public Long crearAnuncio(NuevoAnuncioDto dto) {
         Anuncio anuncio = new Anuncio();
+        validarFotos(dto);
+        validarNuevoAnuncio(dto);
         anuncio.setTipo(dto.getTipo());
         anuncio.setNombreMascota(StringUtils.normalizeSpace(dto.getNombreMascota()));
         anuncio.setNombreMascotaNormalizado(this.normalizarNombre(dto.getNombreMascota()));
@@ -96,6 +99,41 @@ public class AnuncioService {
     public AnuncioDto obtenerAnuncio(Long anuncioId) {
         return anuncioToDto(anuncioRepository.findById(anuncioId)
                 .orElseThrow(() -> new NoSuchElementException("El anuncio #" + anuncioId + " no existe.")));
+    }
+
+    private void validarNuevoAnuncio(NuevoAnuncioDto dto) throws AnuncioIncompletoException {
+        List<String> camposFaltantes = new ArrayList<>();
+        if (dto.getTipo() == null) {
+            camposFaltantes.add("tipo");
+        }
+        if (dto.getEspecieId() == null) {
+            camposFaltantes.add("especie");
+        }
+        if (dto.getLocalidadId() == null) {
+            camposFaltantes.add("localidad");
+        }
+        if (dto.getTelefonoContacto() == null) {
+            camposFaltantes.add("telefono");
+        }
+        if (camposFaltantes.size() == 1) {
+            throw new AnuncioIncompletoException("Faltan completar el campo " + camposFaltantes.get(0));
+        }
+        if (camposFaltantes.size() > 1) {
+            throw new AnuncioIncompletoException("Faltan completar los campos: " + String.join(", ", camposFaltantes));
+        }
+    }
+
+    private void validarFotos(NuevoAnuncioDto dto) {
+        dto.getFotos().forEach(this::verificarCantidadDeMbs);
+    }
+
+    private void verificarCantidadDeMbs(ImagenUploadDto imagenUploadDto) {
+        double numberToTransformInBytes = 0.75;
+        double numberToTransformInMegabytes = 1000000;
+        double sizeInMegaBytes = (imagenUploadDto.getDatosBase64().length() * numberToTransformInBytes)/numberToTransformInMegabytes;
+        if (sizeInMegaBytes > IMAGE_SIZE_MAX) {
+            throw new IllegalArgumentException("El tamaño de la foto supera los " + IMAGE_SIZE_MAX + "MB.");
+        }
     }
 
     private String normalizarNombre(String str) {

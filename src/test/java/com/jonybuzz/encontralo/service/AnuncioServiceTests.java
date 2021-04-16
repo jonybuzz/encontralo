@@ -81,6 +81,45 @@ class AnuncioServiceTests extends ApplicationTests {
         assertThat(anuncioPersistido.getTelefonoContacto()).isEqualTo("21223");
     }
 
+    @SneakyThrows
+    void crearAnuncio_recibeImagenDe5MB_lanzaIllegalArgumentExecption() {
+        String base64 = getContentFromFile("image/image-5-mb.txt");
+        NuevoAnuncioDto nuevoAnuncioDto = nuevoAnuncioPerroPerdido();
+        nuevoAnuncioDto.setFotos(Set.of(ImagenUploadDto.builder()
+            .posicion(1)
+            .datosBase64(base64)
+            .build()));
+        //Ejecucion
+        assertThatThrownBy(() -> anuncioService.crearAnuncio(nuevoAnuncioDto))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("El tamaño de la foto supera los 4MB.");
+    }
+
+    @Test
+    @SneakyThrows
+    void crearAnuncio_datosVacios_lanzaExcepcion() {
+
+        NuevoAnuncioDto nuevoAnuncioDto = new NuevoAnuncioDto();
+        nuevoAnuncioDto.setTipo(TipoAnuncio.PERDIDO);
+        nuevoAnuncioDto.setEspecieId(1);
+        nuevoAnuncioDto.setLocalidadId(2);
+        //Ejecucion
+        assertThatThrownBy(() -> anuncioService.crearAnuncio(nuevoAnuncioDto))
+                .isInstanceOf(AnuncioIncompletoException.class)
+                .hasMessage("Faltan completar el campo telefono");
+    }
+
+    @Test
+    @SneakyThrows
+    void crearAnuncio_faltaAlgunDato_lanzaExcepcion() {
+
+        NuevoAnuncioDto nuevoAnuncioDto = new NuevoAnuncioDto();
+        //Ejecucion
+        assertThatThrownBy(() -> anuncioService.crearAnuncio(nuevoAnuncioDto))
+                .isInstanceOf(AnuncioIncompletoException.class)
+                .hasMessage("Faltan completar los campos: tipo, especie, localidad, telefono");
+    }
+
     @Test
     void buscarAnunciosResumidos_recibeFiltroConTipoPerdidoYEspeciePerro_deveuelveSoloEsos() {
         var filtro = new FiltroAnuncios();
@@ -178,7 +217,9 @@ class AnuncioServiceTests extends ApplicationTests {
                 .hasMessage("El anuncio #5 no existe.");
     }
 
+    @SneakyThrows
     private NuevoAnuncioDto nuevoAnuncioPerroPerdido() {
+        String base64 = getContentFromFile("image/image-8-kb.txt");
         return NuevoAnuncioDto.builder()
                 .tipo(TipoAnuncio.PERDIDO)
                 .nombreMascota("Señor Itatí,, ")
@@ -192,11 +233,11 @@ class AnuncioServiceTests extends ApplicationTests {
                 .pelajeId(1)
                 .fotos(Set.of(ImagenUploadDto.builder()
                                 .posicion(1)
-                                .datosBase64("R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==")
+                                .datosBase64(base64)
                                 .build(),
                         ImagenUploadDto.builder()
                                 .posicion(2)
-                                .datosBase64("R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==")
+                                .datosBase64(base64)
                                 .build()))
                 .localidadId(2)
                 .comentario(" Tiene una chapita con mi teléfono! \n\r Revisar")
