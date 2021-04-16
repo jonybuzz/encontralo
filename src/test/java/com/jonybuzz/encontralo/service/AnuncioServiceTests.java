@@ -82,6 +82,7 @@ class AnuncioServiceTests extends ApplicationTests {
     }
 
     @SneakyThrows
+    @Test
     void crearAnuncio_recibeImagenDe5MB_lanzaIllegalArgumentExecption() {
         String base64 = getContentFromFile("image/image-5-mb.txt");
         NuevoAnuncioDto nuevoAnuncioDto = nuevoAnuncioPerroPerdido();
