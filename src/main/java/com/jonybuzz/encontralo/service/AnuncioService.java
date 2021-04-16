@@ -61,7 +61,6 @@ public class AnuncioService {
     public Long crearAnuncio(NuevoAnuncioDto dto) {
         Anuncio anuncio = new Anuncio();
         validarFotos(dto);
-        validarNuevoAnuncio(dto);
         anuncio.setTipo(dto.getTipo());
         anuncio.setNombreMascota(StringUtils.normalizeSpace(dto.getNombreMascota()));
         anuncio.setNombreMascotaNormalizado(this.normalizarNombre(dto.getNombreMascota()));
@@ -100,28 +99,6 @@ public class AnuncioService {
     public AnuncioDto obtenerAnuncio(Long anuncioId) {
         return anuncioToDto(anuncioRepository.findById(anuncioId)
                 .orElseThrow(() -> new NoSuchElementException("El anuncio #" + anuncioId + " no existe.")));
-    }
-
-    private void validarNuevoAnuncio(NuevoAnuncioDto dto) {
-        List<String> camposFaltantes = new ArrayList<>();
-        if (dto.getTipo() == null) {
-            camposFaltantes.add("tipo");
-        }
-        if (dto.getEspecieId() == null) {
-            camposFaltantes.add("especie");
-        }
-        if (dto.getLocalidadId() == null) {
-            camposFaltantes.add("localidad");
-        }
-        if (dto.getTelefonoContacto() == null) {
-            camposFaltantes.add("telefono");
-        }
-        if (camposFaltantes.size() == 1) {
-            throw new AnuncioIncompletoException("Faltan completar el campo " + camposFaltantes.get(0));
-        }
-        if (camposFaltantes.size() > 1) {
-            throw new AnuncioIncompletoException("Faltan completar los campos: " + String.join(", ", camposFaltantes));
-        }
     }
 
     private void validarFotos(NuevoAnuncioDto dto) {
