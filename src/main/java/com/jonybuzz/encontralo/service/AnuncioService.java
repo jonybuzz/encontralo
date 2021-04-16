@@ -102,7 +102,7 @@ public class AnuncioService {
                 .orElseThrow(() -> new NoSuchElementException("El anuncio #" + anuncioId + " no existe.")));
     }
 
-    private void validarNuevoAnuncio(NuevoAnuncioDto dto) throws AnuncioIncompletoException {
+    private void validarNuevoAnuncio(NuevoAnuncioDto dto) {
         List<String> camposFaltantes = new ArrayList<>();
         if (dto.getTipo() == null) {
             camposFaltantes.add("tipo");
