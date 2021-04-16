@@ -96,31 +96,6 @@ class AnuncioServiceTests extends ApplicationTests {
     }
 
     @Test
-    @SneakyThrows
-    void crearAnuncio_datosVacios_lanzaExcepcion() {
-
-        NuevoAnuncioDto nuevoAnuncioDto = new NuevoAnuncioDto();
-        nuevoAnuncioDto.setTipo(TipoAnuncio.PERDIDO);
-        nuevoAnuncioDto.setEspecieId(1);
-        nuevoAnuncioDto.setLocalidadId(2);
-        //Ejecucion
-        assertThatThrownBy(() -> anuncioService.crearAnuncio(nuevoAnuncioDto))
-                .isInstanceOf(AnuncioIncompletoException.class)
-                .hasMessage("Faltan completar el campo telefono");
-    }
-
-    @Test
-    @SneakyThrows
-    void crearAnuncio_faltaAlgunDato_lanzaExcepcion() {
-
-        NuevoAnuncioDto nuevoAnuncioDto = new NuevoAnuncioDto();
-        //Ejecucion
-        assertThatThrownBy(() -> anuncioService.crearAnuncio(nuevoAnuncioDto))
-                .isInstanceOf(AnuncioIncompletoException.class)
-                .hasMessage("Faltan completar los campos: tipo, especie, localidad, telefono");
-    }
-
-    @Test
     void buscarAnunciosResumidos_recibeFiltroConTipoPerdidoYEspeciePerro_deveuelveSoloEsos() {
         var filtro = new FiltroAnuncios();
         filtro.setTipoAnuncio(TipoAnuncio.PERDIDO);
