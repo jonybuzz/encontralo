@@ -22,6 +22,16 @@
               @change="especieId = parseInt($event.target.value)"
           ></f7-list-item>
 
+          <f7-list-item-row>
+            <f7-list-item-cell>
+              <f7-row class="enc-col-center-content">
+                <f7-col>
+                  <selector-fotos v-on:fotoCargada="agregarFotoAlAnuncio"></selector-fotos>
+                </f7-col>
+              </f7-row>
+            </f7-list-item-cell>
+          </f7-list-item-row>
+
           <f7-list-input
               label="Sexo*"
               type="select"
@@ -115,7 +125,7 @@
           ></f7-list-input>
 
           <f7-list-input
-              label="Nombre"
+              label="Nombre mascota"
               type="text"
               placeholder=""
               v-model:value="nombreMascota"
@@ -142,22 +152,20 @@
 </template>
 
 <script>
-import {onMounted} from 'vue'
 import {f7, useStore} from 'framework7-vue'
 import requestsAnuncio from './../js/requests/anuncio'
+import SelectorFotos from './selectorFotos'
 
 export default {
   name: "crearAnuncio.vue",
   props: {
     tipoAnuncio: String
   },
+  components: {
+    SelectorFotos
+  },
   setup() {
     const seleccionables = useStore('seleccionables');
-
-    onMounted(() => {
-      //
-    });
-
     return {
       seleccionables
     }
@@ -177,6 +185,7 @@ export default {
       telefonoContacto: '',
       nombreMascota: '',
       comentario: '',
+      fotos: []
     };
   },
   computed: {
@@ -217,7 +226,10 @@ export default {
         pelajeId: orNull(self.pelajeId),
         localidadId: orNull(self.localidadId),
         comentario: orNull(self.comentario),
-        telefonoContacto: orNull(self.telefonoContacto)
+        telefonoContacto: orNull(self.telefonoContacto),
+        fotos: self.fotos.map((val, i) => {
+          return {posicion: i + 1, datosBase64: val}
+        })
       }
       console.dir(nuevoAnuncio)
       requestsAnuncio.crear(nuevoAnuncio)
@@ -245,6 +257,9 @@ export default {
         arr.splice(arr.indexOf("0"), 1)
         return arr
       }
+    },
+    agregarFotoAlAnuncio(file) {
+      this.fotos.push(file.contents.split(',')[1])
     }
   }
 }
@@ -252,5 +267,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
