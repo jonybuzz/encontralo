@@ -125,7 +125,7 @@
           ></f7-list-input>
 
           <f7-list-input
-              label="Nombre"
+              label="Nombre mascota"
               type="text"
               placeholder=""
               v-model:value="nombreMascota"
