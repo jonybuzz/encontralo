@@ -1,6 +1,6 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <h1> <img alt="logo" src="src/main/frontend/assets-src/web-icon.png" height="35"/> encontralo.com.ar </h1>
@@ -67,6 +67,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://github.com/ghostframe"><img src="https://avatars.githubusercontent.com/u/22096592?v=4?s=100" width="100px;" alt=""/><br /><sub><b>ghostframe</b></sub></a><br /><a href="https://github.com/jonybuzz/encontralo/commits?author=ghostframe" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/Adrianzubieta"><img src="https://avatars.githubusercontent.com/u/29063483?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Adrian Zubieta Hernández</b></sub></a><br /><a href="https://github.com/jonybuzz/encontralo/commits?author=Adrianzubieta" title="Code">💻</a></td>
   </tr>
 </table>
 

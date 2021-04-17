@@ -16,7 +16,6 @@ import com.jonybuzz.encontralo.repository.LocalidadRepository;
 import com.jonybuzz.encontralo.repository.PelajeRepository;
 import com.jonybuzz.encontralo.repository.RazaRepository;
 import com.jonybuzz.encontralo.repository.TamanioRepository;
-import com.jonybuzz.encontralo.service.exception.AnuncioIncompletoException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -28,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -40,6 +38,7 @@ public class AnuncioService {
 
     public static final int PAGE_SIZE = 15;
     public static final String PATH_DESCARGA_IMAGENES = "imagenes";
+    private static final int IMAGE_SIZE_MAX = 4;
     @Autowired
     private AnuncioRepository anuncioRepository;
     @Autowired
@@ -58,10 +57,9 @@ public class AnuncioService {
     private LocalidadRepository localidadRepository;
 
     @Transactional
-    public Long crearAnuncio(NuevoAnuncioDto dto) throws AnuncioIncompletoException {
-
+    public Long crearAnuncio(NuevoAnuncioDto dto) {
         Anuncio anuncio = new Anuncio();
-        validarNuevoAnuncio(dto);
+        validarFotos(dto);
         anuncio.setTipo(dto.getTipo());
         anuncio.setNombreMascota(StringUtils.normalizeSpace(dto.getNombreMascota()));
         anuncio.setNombreMascotaNormalizado(this.normalizarNombre(dto.getNombreMascota()));
@@ -102,25 +100,16 @@ public class AnuncioService {
                 .orElseThrow(() -> new NoSuchElementException("El anuncio #" + anuncioId + " no existe.")));
     }
 
-    private void validarNuevoAnuncio(NuevoAnuncioDto dto) throws AnuncioIncompletoException {
-        List<String> camposFaltantes = new ArrayList<>();
-        if (dto.getTipo() == null) {
-            camposFaltantes.add("tipo");
-        }
-        if (dto.getEspecieId() == null) {
-            camposFaltantes.add("especie");
-        }
-        if (dto.getLocalidadId() == null) {
-            camposFaltantes.add("localidad");
-        }
-        if (dto.getTelefonoContacto() == null) {
-            camposFaltantes.add("telefono");
-        }
-        if (camposFaltantes.size() == 1) {
-            throw new AnuncioIncompletoException("Faltan completar el campo " + camposFaltantes.get(0));
-        }
-        if (camposFaltantes.size() > 1) {
-            throw new AnuncioIncompletoException("Faltan completar los campos: " + String.join(", ", camposFaltantes));
+    private void validarFotos(NuevoAnuncioDto dto) {
+        dto.getFotos().forEach(this::verificarCantidadDeMbs);
+    }
+
+    private void verificarCantidadDeMbs(ImagenUploadDto imagenUploadDto) {
+        double numberToTransformInBytes = 0.75;
+        double numberToTransformInMegabytes = 1000000;
+        double sizeInMegaBytes = (imagenUploadDto.getDatosBase64().length() * numberToTransformInBytes)/numberToTransformInMegabytes;
+        if (sizeInMegaBytes > IMAGE_SIZE_MAX) {
+            throw new IllegalArgumentException("El tamaño de la foto supera los " + IMAGE_SIZE_MAX + "MB.");
         }
     }
 

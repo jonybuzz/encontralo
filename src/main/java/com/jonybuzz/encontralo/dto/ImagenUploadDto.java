@@ -6,7 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
+import java.util.Base64;
+
 
 @Data
 @Builder
@@ -20,7 +21,7 @@ public class ImagenUploadDto {
     public Imagen toImagen() {
         var imagen = new Imagen();
         imagen.setPosicion(this.posicion);
-        imagen.setDatos(java.util.Base64.getDecoder().decode(this.datosBase64.getBytes(UTF_8)));
+        imagen.setDatos(Base64.getDecoder().decode(this.datosBase64));
         return imagen;
     }
 }

@@ -5,7 +5,6 @@ import com.jonybuzz.encontralo.dto.NuevoAnuncioDto;
 import com.jonybuzz.encontralo.model.FiltroAnuncios;
 import com.jonybuzz.encontralo.model.TipoAnuncio;
 import com.jonybuzz.encontralo.service.AnuncioService;
-import com.jonybuzz.encontralo.service.exception.AnuncioIncompletoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 public class AnuncioRestController {
 
@@ -21,7 +22,7 @@ public class AnuncioRestController {
     private AnuncioService anuncioService;
 
     @PostMapping("/api/anuncios")
-    public Long crearAnuncio(@RequestBody NuevoAnuncioDto nuevoAnuncioDto) throws AnuncioIncompletoException {
+    public Long crearAnuncio(@RequestBody @Valid NuevoAnuncioDto nuevoAnuncioDto) {
         return anuncioService.crearAnuncio(nuevoAnuncioDto);
     }
 
