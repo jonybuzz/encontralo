@@ -121,7 +121,7 @@ public class AnuncioService {
                 );
     }
 
-    public AnuncioResumidoDto anuncioToResumenDto(Anuncio anuncio) {
+    private AnuncioResumidoDto anuncioToResumenDto(Anuncio anuncio) {
         return AnuncioResumidoDto.builder()
                 .id(anuncio.getId())
                 .tipo(anuncio.getTipo())
@@ -145,7 +145,7 @@ public class AnuncioService {
                 .build();
     }
 
-    public AnuncioDto anuncioToDto(Anuncio anuncio) {
+    private AnuncioDto anuncioToDto(Anuncio anuncio) {
         return AnuncioDto.builder()
                 .id(anuncio.getId())
                 .tipo(anuncio.getTipo())
