@@ -16,7 +16,7 @@ import com.jonybuzz.encontralo.repository.LocalidadRepository;
 import com.jonybuzz.encontralo.repository.PelajeRepository;
 import com.jonybuzz.encontralo.repository.RazaRepository;
 import com.jonybuzz.encontralo.repository.TamanioRepository;
-import org.apache.commons.lang3.StringUtils;
+import com.jonybuzz.encontralo.service.mappers.AnuncioMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -55,27 +55,18 @@ public class AnuncioService {
     private PelajeRepository pelajeRepository;
     @Autowired
     private LocalidadRepository localidadRepository;
+    @Autowired
+    private AnuncioMapper anuncioMapper;
 
     @Transactional
     public Long crearAnuncio(NuevoAnuncioDto dto) {
-        Anuncio anuncio = new Anuncio();
+        Anuncio anuncio = anuncioMapper.NuevoAnuncioDtoToAnuncio(dto);
         validarFotos(dto);
-        anuncio.setTipo(dto.getTipo());
-        anuncio.setNombreMascota(StringUtils.normalizeSpace(dto.getNombreMascota()));
-        anuncio.setNombreMascotaNormalizado(this.normalizarNombre(dto.getNombreMascota()));
-        anuncio.setEspecieId(dto.getEspecieId());
         anuncio.setRaza(dto.getRazaId() == null ? null : razaRepository.getOne(dto.getRazaId()));
-        anuncio.setSexo(dto.getSexo());
-        anuncio.setTamanioId(dto.getTamanioId());
-        anuncio.setFranjaEtariaId(dto.getFranjaEtariaId());
         anuncio.setColores(new HashSet<>(colorRepository.findAllById(dto.getColoresIds())));
-        anuncio.setTieneCollar(dto.getTieneCollar());
-        anuncio.setPelajeId(dto.getPelajeId());
         anuncio.setFotos(dto.getFotos().stream()
                 .map(ImagenUploadDto::toImagen).collect(Collectors.toSet()));
         anuncio.setLocalidad(localidadRepository.getOne(dto.getLocalidadId()));
-        anuncio.setComentario(StringUtils.normalizeSpace(dto.getComentario()));
-        anuncio.setTelefonoContacto(dto.getTelefonoContacto());
         anuncio.setFechaCreacion(LocalDateTime.now());
         return anuncioRepository.saveAndFlush(anuncio).getId();
     }
@@ -111,14 +102,6 @@ public class AnuncioService {
         if (sizeInMegaBytes > IMAGE_SIZE_MAX) {
             throw new IllegalArgumentException("El tamaño de la foto supera los " + IMAGE_SIZE_MAX + "MB.");
         }
-    }
-
-    private String normalizarNombre(String str) {
-        return str == null ? null :
-                StringUtils.normalizeSpace(
-                        StringUtils.stripAccents(str)
-                                .toUpperCase().replaceAll("[^A-Z\\s]", "")
-                );
     }
 
     public AnuncioResumidoDto anuncioToResumenDto(Anuncio anuncio) {
