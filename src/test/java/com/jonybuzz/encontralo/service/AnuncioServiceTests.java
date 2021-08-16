@@ -96,6 +96,13 @@ class AnuncioServiceTests extends ApplicationTests {
             .hasMessage("El tamaño de la foto supera los 4MB.");
     }
 
+    @SneakyThrows
+    @Test
+    void crearAnuncio_conAnuncioNuevoNull_lanzaIllegalArgumentExecption() {
+        assertThatThrownBy(() -> anuncioService.crearAnuncio(null))
+            .isInstanceOf(NullPointerException.class);
+    }
+
     @Test
     void buscarAnunciosResumidos_recibeFiltroConTipoPerdidoYEspeciePerro_deveuelveSoloEsos() {
         var filtro = new FiltroAnuncios();
