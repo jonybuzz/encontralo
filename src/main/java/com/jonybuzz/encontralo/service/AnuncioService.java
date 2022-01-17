@@ -64,7 +64,7 @@ public class AnuncioService {
         anuncio.setNombreMascota(StringUtils.normalizeSpace(dto.getNombreMascota()));
         anuncio.setNombreMascotaNormalizado(this.normalizarNombre(dto.getNombreMascota()));
         anuncio.setEspecieId(dto.getEspecieId());
-        anuncio.setRaza(dto.getRazaId() == null ? null : razaRepository.getOne(dto.getRazaId()));
+        anuncio.setRaza(dto.getRazaId() == null ? null : razaRepository.getById(dto.getRazaId()));
         anuncio.setSexo(dto.getSexo());
         anuncio.setTamanioId(dto.getTamanioId());
         anuncio.setFranjaEtariaId(dto.getFranjaEtariaId());
@@ -73,7 +73,7 @@ public class AnuncioService {
         anuncio.setPelajeId(dto.getPelajeId());
         anuncio.setFotos(dto.getFotos().stream()
                 .map(ImagenUploadDto::toImagen).collect(Collectors.toSet()));
-        anuncio.setLocalidad(localidadRepository.getOne(dto.getLocalidadId()));
+        anuncio.setLocalidad(localidadRepository.getById(dto.getLocalidadId()));
         anuncio.setComentario(StringUtils.normalizeSpace(dto.getComentario()));
         anuncio.setTelefonoContacto(dto.getTelefonoContacto());
         anuncio.setFechaCreacion(LocalDateTime.now());
@@ -87,7 +87,8 @@ public class AnuncioService {
         anuncioBuscado.setEspecieId(filtro.getEspecieId());
         Page<Anuncio> pagina = anuncioRepository.findAll(
                 Example.of(anuncioBuscado),
-                PageRequest.of(filtro.getPagina() - 1, PAGE_SIZE));
+                PageRequest.of(filtro.getPagina() - 1, PAGE_SIZE)
+        );
         List<AnuncioResumidoDto> dtos = pagina.stream()
                 .map(this::anuncioToResumenDto)
                 .collect(Collectors.toList());
@@ -107,7 +108,8 @@ public class AnuncioService {
     private void verificarCantidadDeMbs(ImagenUploadDto imagenUploadDto) {
         double numberToTransformInBytes = 0.75;
         double numberToTransformInMegabytes = 1000000;
-        double sizeInMegaBytes = (imagenUploadDto.getDatosBase64().length() * numberToTransformInBytes)/numberToTransformInMegabytes;
+        double sizeInMegaBytes =
+                (imagenUploadDto.getDatosBase64().length() * numberToTransformInBytes) / numberToTransformInMegabytes;
         if (sizeInMegaBytes > IMAGE_SIZE_MAX) {
             throw new IllegalArgumentException("El tamaño de la foto supera los " + IMAGE_SIZE_MAX + "MB.");
         }

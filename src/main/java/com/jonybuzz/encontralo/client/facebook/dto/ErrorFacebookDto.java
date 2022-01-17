@@ -1,4 +1,4 @@
-package com.jonybuzz.encontralo.dto.facebook;
+package com.jonybuzz.encontralo.client.facebook.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

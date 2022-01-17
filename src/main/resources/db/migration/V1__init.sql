@@ -67,3 +67,9 @@ CREATE TABLE anuncio_colores (
   CONSTRAINT anuncio_colores_fk1 FOREIGN KEY (anuncio_id) REFERENCES anuncio(id),
   CONSTRAINT anuncio_colores_fk2 FOREIGN KEY (colores_id) REFERENCES color(id)
 );
+
+CREATE TABLE acceso_paginas_facebook (
+  id_pagina VARCHAR(50) NOT NULL,
+  access_token VARCHAR(255) NOT NULL,
+  CONSTRAINT acceso_paginas_facebook_pk PRIMARY KEY (id_pagina)
+);
