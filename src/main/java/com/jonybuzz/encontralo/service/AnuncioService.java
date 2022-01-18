@@ -17,7 +17,6 @@ import com.jonybuzz.encontralo.repository.PelajeRepository;
 import com.jonybuzz.encontralo.repository.RazaRepository;
 import com.jonybuzz.encontralo.repository.TamanioRepository;
 import com.jonybuzz.encontralo.service.mappers.AnuncioMapper;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -63,11 +62,11 @@ public class AnuncioService {
     public Long crearAnuncio(NuevoAnuncioDto dto) {
         Anuncio anuncio = anuncioMapper.NuevoAnuncioDtoToAnuncio(dto);
         validarFotos(dto);
-        anuncio.setRaza(dto.getRazaId() == null ? null : razaRepository.getOne(dto.getRazaId()));
+        anuncio.setRaza(dto.getRazaId() == null ? null : razaRepository.getById(dto.getRazaId()));
         anuncio.setColores(new HashSet<>(colorRepository.findAllById(dto.getColoresIds())));
         anuncio.setFotos(dto.getFotos().stream()
                 .map(ImagenUploadDto::toImagen).collect(Collectors.toSet()));
-        anuncio.setLocalidad(localidadRepository.getOne(dto.getLocalidadId()));
+        anuncio.setLocalidad(localidadRepository.getById(dto.getLocalidadId()));
         anuncio.setFechaCreacion(LocalDateTime.now());
         return anuncioRepository.saveAndFlush(anuncio).getId();
     }
@@ -105,14 +104,6 @@ public class AnuncioService {
         if (sizeInMegaBytes > IMAGE_SIZE_MAX) {
             throw new IllegalArgumentException("El tamaño de la foto supera los " + IMAGE_SIZE_MAX + "MB.");
         }
-    }
-
-    private String normalizarNombre(String str) {
-        return str == null ? null :
-                StringUtils.normalizeSpace(
-                        StringUtils.stripAccents(str)
-                                .toUpperCase().replaceAll("[^A-Z\\s]", "")
-                );
     }
 
     private AnuncioResumidoDto anuncioToResumenDto(Anuncio anuncio) {
