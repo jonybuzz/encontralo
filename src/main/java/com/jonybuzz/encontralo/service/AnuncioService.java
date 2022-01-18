@@ -16,6 +16,7 @@ import com.jonybuzz.encontralo.repository.LocalidadRepository;
 import com.jonybuzz.encontralo.repository.PelajeRepository;
 import com.jonybuzz.encontralo.repository.RazaRepository;
 import com.jonybuzz.encontralo.repository.TamanioRepository;
+import com.jonybuzz.encontralo.service.mappers.AnuncioMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -55,27 +56,18 @@ public class AnuncioService {
     private PelajeRepository pelajeRepository;
     @Autowired
     private LocalidadRepository localidadRepository;
+    @Autowired
+    private AnuncioMapper anuncioMapper;
 
     @Transactional
     public Long crearAnuncio(NuevoAnuncioDto dto) {
-        Anuncio anuncio = new Anuncio();
+        Anuncio anuncio = anuncioMapper.NuevoAnuncioDtoToAnuncio(dto);
         validarFotos(dto);
-        anuncio.setTipo(dto.getTipo());
-        anuncio.setNombreMascota(StringUtils.normalizeSpace(dto.getNombreMascota()));
-        anuncio.setNombreMascotaNormalizado(this.normalizarNombre(dto.getNombreMascota()));
-        anuncio.setEspecieId(dto.getEspecieId());
-        anuncio.setRaza(dto.getRazaId() == null ? null : razaRepository.getById(dto.getRazaId()));
-        anuncio.setSexo(dto.getSexo());
-        anuncio.setTamanioId(dto.getTamanioId());
-        anuncio.setFranjaEtariaId(dto.getFranjaEtariaId());
+        anuncio.setRaza(dto.getRazaId() == null ? null : razaRepository.getOne(dto.getRazaId()));
         anuncio.setColores(new HashSet<>(colorRepository.findAllById(dto.getColoresIds())));
-        anuncio.setTieneCollar(dto.getTieneCollar());
-        anuncio.setPelajeId(dto.getPelajeId());
         anuncio.setFotos(dto.getFotos().stream()
                 .map(ImagenUploadDto::toImagen).collect(Collectors.toSet()));
-        anuncio.setLocalidad(localidadRepository.getById(dto.getLocalidadId()));
-        anuncio.setComentario(StringUtils.normalizeSpace(dto.getComentario()));
-        anuncio.setTelefonoContacto(dto.getTelefonoContacto());
+        anuncio.setLocalidad(localidadRepository.getOne(dto.getLocalidadId()));
         anuncio.setFechaCreacion(LocalDateTime.now());
         return anuncioRepository.saveAndFlush(anuncio).getId();
     }
