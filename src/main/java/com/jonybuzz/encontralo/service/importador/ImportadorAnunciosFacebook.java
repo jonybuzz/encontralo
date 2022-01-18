@@ -7,6 +7,7 @@ import com.jonybuzz.encontralo.model.facebook.AccesoPaginasFacebook;
 import com.jonybuzz.encontralo.repository.AnuncioRepository;
 import com.jonybuzz.encontralo.repository.facebook.AccesoPaginasFacebookRepository;
 import com.jonybuzz.encontralo.security.AesEncryptionUtil;
+import com.jonybuzz.encontralo.service.InterpreteTextoLibreService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,10 +26,12 @@ public class ImportadorAnunciosFacebook implements ImportadorAnuncios {
     private FacebookClient facebookClient;
     @Autowired
     private AccesoPaginasFacebookRepository accesoPaginasFacebookRepository;
-    @Value("${app.importadorAnuncios.facebook.token.password}")
+    @Value("${app.importadorAnuncios.facebook.token.aespassword}")
     private String passwordEncriptacion;
     @Autowired
     private AnuncioRepository anuncioRepository;
+    @Autowired
+    private InterpreteTextoLibreService interpreteTextoLibreService;
 
     @Override
     public void importar(LocalDateTime desde, LocalDateTime hasta) {
@@ -57,7 +60,7 @@ public class ImportadorAnunciosFacebook implements ImportadorAnuncios {
 
     private Anuncio facebookPostToAnuncio(PostFbDto post) {
         //TODO procesamiento con Wit
-        return new Anuncio();
+        return interpreteTextoLibreService.interpretarDatosAnuncio(post.getMessage(), post.getCreatedTime());
     }
 
 }

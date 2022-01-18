@@ -87,13 +87,13 @@ class AnuncioServiceTests extends ApplicationTests {
         String base64 = getContentFromFile("image/image-5-mb.txt");
         NuevoAnuncioDto nuevoAnuncioDto = nuevoAnuncioPerroPerdido();
         nuevoAnuncioDto.setFotos(Set.of(ImagenUploadDto.builder()
-            .posicion(1)
-            .datosBase64(base64)
-            .build()));
+                .posicion(1)
+                .datosBase64(base64)
+                .build()));
         //Ejecucion
         assertThatThrownBy(() -> anuncioService.crearAnuncio(nuevoAnuncioDto))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("El tamaño de la foto supera los 4MB.");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("El tamaño de la foto supera los 4MB.");
     }
 
     @Test
@@ -207,14 +207,16 @@ class AnuncioServiceTests extends ApplicationTests {
                 .coloresIds(Set.of(2, 3))
                 .tieneCollar(true)
                 .pelajeId(1)
-                .fotos(Set.of(ImagenUploadDto.builder()
+                .fotos(Set.of(
+                        ImagenUploadDto.builder()
                                 .posicion(1)
                                 .datosBase64(base64)
                                 .build(),
                         ImagenUploadDto.builder()
                                 .posicion(2)
                                 .datosBase64(base64)
-                                .build()))
+                                .build()
+                ))
                 .localidadId(2)
                 .comentario(" Tiene una chapita con mi teléfono! \n\r Revisar")
                 .telefonoContacto("11-5678-0987")
