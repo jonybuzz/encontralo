@@ -9,6 +9,7 @@ import com.jonybuzz.encontralo.model.Anuncio;
 import com.jonybuzz.encontralo.model.Especie;
 import com.jonybuzz.encontralo.model.FiltroAnuncios;
 import com.jonybuzz.encontralo.model.Imagen;
+import com.jonybuzz.encontralo.model.OrigenAnuncio;
 import com.jonybuzz.encontralo.model.Sexo;
 import com.jonybuzz.encontralo.model.TipoAnuncio;
 import com.jonybuzz.encontralo.repository.AnuncioRepository;
@@ -54,11 +55,12 @@ class AnuncioServiceTests extends ApplicationTests {
         Long id = anuncioService.crearAnuncio(nuevoAnuncioDto);
         assertThat(JdbcTestUtils.countRowsInTable(jdbcTemplate, "anuncio")).isEqualTo(1);
         assertThat(id).isNotNull();
-        var anuncioPersistido = anuncioRepository.getOne(id);
+        var anuncioPersistido = anuncioRepository.getById(id);
         assertThat(anuncioPersistido.getColores()).hasSize(2);
         assertThat(anuncioPersistido.getNombreMascotaNormalizado()).isEqualTo("SENOR ITATI");
         assertThat(anuncioPersistido.getFechaCreacion()).isCloseTo(LocalDateTime.now(), within(5, SECONDS));
         assertThat(anuncioPersistido.getComentario()).isEqualTo("Tiene una chapita con mi teléfono! Revisar");
+        assertThat(anuncioPersistido.getOrigen()).isEqualTo(OrigenAnuncio.WEB);
     }
 
     @Test
@@ -87,13 +89,13 @@ class AnuncioServiceTests extends ApplicationTests {
         String base64 = getContentFromFile("image/image-5-mb.txt");
         NuevoAnuncioDto nuevoAnuncioDto = nuevoAnuncioPerroPerdido();
         nuevoAnuncioDto.setFotos(Set.of(ImagenUploadDto.builder()
-            .posicion(1)
-            .datosBase64(base64)
-            .build()));
+                .posicion(1)
+                .datosBase64(base64)
+                .build()));
         //Ejecucion
         assertThatThrownBy(() -> anuncioService.crearAnuncio(nuevoAnuncioDto))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("El tamaño de la foto supera los 4MB.");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("El tamaño de la foto supera los 4MB.");
     }
 
     @SneakyThrows
@@ -214,17 +216,20 @@ class AnuncioServiceTests extends ApplicationTests {
                 .coloresIds(Set.of(2, 3))
                 .tieneCollar(true)
                 .pelajeId(1)
-                .fotos(Set.of(ImagenUploadDto.builder()
+                .fotos(Set.of(
+                        ImagenUploadDto.builder()
                                 .posicion(1)
                                 .datosBase64(base64)
                                 .build(),
                         ImagenUploadDto.builder()
                                 .posicion(2)
                                 .datosBase64(base64)
-                                .build()))
+                                .build()
+                ))
                 .localidadId(2)
                 .comentario(" Tiene una chapita con mi teléfono! \n\r Revisar")
                 .telefonoContacto("11-5678-0987")
+                .origen(OrigenAnuncio.WEB)
                 .build();
     }
 

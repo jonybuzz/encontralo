@@ -8,6 +8,7 @@ import com.jonybuzz.encontralo.dto.NuevoAnuncioDto;
 import com.jonybuzz.encontralo.model.Anuncio;
 import com.jonybuzz.encontralo.model.FiltroAnuncios;
 import com.jonybuzz.encontralo.model.Imagen;
+import com.jonybuzz.encontralo.model.OrigenAnuncio;
 import com.jonybuzz.encontralo.repository.AnuncioRepository;
 import com.jonybuzz.encontralo.repository.ColorRepository;
 import com.jonybuzz.encontralo.repository.EspecieRepository;
@@ -62,12 +63,13 @@ public class AnuncioService {
     public Long crearAnuncio(NuevoAnuncioDto dto) {
         Anuncio anuncio = anuncioMapper.NuevoAnuncioDtoToAnuncio(dto);
         validarFotos(dto);
-        anuncio.setRaza(dto.getRazaId() == null ? null : razaRepository.getOne(dto.getRazaId()));
+        anuncio.setRaza(dto.getRazaId() == null ? null : razaRepository.getById(dto.getRazaId()));
         anuncio.setColores(new HashSet<>(colorRepository.findAllById(dto.getColoresIds())));
         anuncio.setFotos(dto.getFotos().stream()
                 .map(ImagenUploadDto::toImagen).collect(Collectors.toSet()));
-        anuncio.setLocalidad(localidadRepository.getOne(dto.getLocalidadId()));
+        anuncio.setLocalidad(localidadRepository.getById(dto.getLocalidadId()));
         anuncio.setFechaCreacion(LocalDateTime.now());
+        anuncio.setOrigen(dto.getOrigen());
         return anuncioRepository.saveAndFlush(anuncio).getId();
     }
 
@@ -78,7 +80,8 @@ public class AnuncioService {
         anuncioBuscado.setEspecieId(filtro.getEspecieId());
         Page<Anuncio> pagina = anuncioRepository.findAll(
                 Example.of(anuncioBuscado),
-                PageRequest.of(filtro.getPagina() - 1, PAGE_SIZE));
+                PageRequest.of(filtro.getPagina() - 1, PAGE_SIZE)
+        );
         List<AnuncioResumidoDto> dtos = pagina.stream()
                 .map(this::anuncioToResumenDto)
                 .collect(Collectors.toList());
@@ -98,13 +101,14 @@ public class AnuncioService {
     private void verificarCantidadDeMbs(ImagenUploadDto imagenUploadDto) {
         double numberToTransformInBytes = 0.75;
         double numberToTransformInMegabytes = 1000000;
-        double sizeInMegaBytes = (imagenUploadDto.getDatosBase64().length() * numberToTransformInBytes)/numberToTransformInMegabytes;
+        double sizeInMegaBytes =
+                (imagenUploadDto.getDatosBase64().length() * numberToTransformInBytes) / numberToTransformInMegabytes;
         if (sizeInMegaBytes > IMAGE_SIZE_MAX) {
             throw new IllegalArgumentException("El tamaño de la foto supera los " + IMAGE_SIZE_MAX + "MB.");
         }
     }
 
-    public AnuncioResumidoDto anuncioToResumenDto(Anuncio anuncio) {
+    private AnuncioResumidoDto anuncioToResumenDto(Anuncio anuncio) {
         return AnuncioResumidoDto.builder()
                 .id(anuncio.getId())
                 .tipo(anuncio.getTipo())
@@ -128,7 +132,7 @@ public class AnuncioService {
                 .build();
     }
 
-    public AnuncioDto anuncioToDto(Anuncio anuncio) {
+    private AnuncioDto anuncioToDto(Anuncio anuncio) {
         return AnuncioDto.builder()
                 .id(anuncio.getId())
                 .tipo(anuncio.getTipo())
