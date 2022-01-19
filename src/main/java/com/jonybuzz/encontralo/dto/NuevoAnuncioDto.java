@@ -1,5 +1,6 @@
 package com.jonybuzz.encontralo.dto;
 
+import com.jonybuzz.encontralo.model.OrigenAnuncio;
 import com.jonybuzz.encontralo.model.Sexo;
 import com.jonybuzz.encontralo.model.TipoAnuncio;
 import lombok.AllArgsConstructor;
@@ -48,5 +49,7 @@ public class NuevoAnuncioDto {
 
     @NotNull(message = "telefono")
     private String telefonoContacto;
+
+    private OrigenAnuncio origen;
 
 }

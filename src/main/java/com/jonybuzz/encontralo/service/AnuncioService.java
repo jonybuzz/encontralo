@@ -8,6 +8,7 @@ import com.jonybuzz.encontralo.dto.NuevoAnuncioDto;
 import com.jonybuzz.encontralo.model.Anuncio;
 import com.jonybuzz.encontralo.model.FiltroAnuncios;
 import com.jonybuzz.encontralo.model.Imagen;
+import com.jonybuzz.encontralo.model.OrigenAnuncio;
 import com.jonybuzz.encontralo.repository.AnuncioRepository;
 import com.jonybuzz.encontralo.repository.ColorRepository;
 import com.jonybuzz.encontralo.repository.EspecieRepository;
@@ -68,6 +69,7 @@ public class AnuncioService {
                 .map(ImagenUploadDto::toImagen).collect(Collectors.toSet()));
         anuncio.setLocalidad(localidadRepository.getById(dto.getLocalidadId()));
         anuncio.setFechaCreacion(LocalDateTime.now());
+        anuncio.setOrigen(dto.getOrigen());
         return anuncioRepository.saveAndFlush(anuncio).getId();
     }
 

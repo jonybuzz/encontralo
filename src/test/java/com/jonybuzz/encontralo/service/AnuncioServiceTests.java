@@ -9,6 +9,7 @@ import com.jonybuzz.encontralo.model.Anuncio;
 import com.jonybuzz.encontralo.model.Especie;
 import com.jonybuzz.encontralo.model.FiltroAnuncios;
 import com.jonybuzz.encontralo.model.Imagen;
+import com.jonybuzz.encontralo.model.OrigenAnuncio;
 import com.jonybuzz.encontralo.model.Sexo;
 import com.jonybuzz.encontralo.model.TipoAnuncio;
 import com.jonybuzz.encontralo.repository.AnuncioRepository;
@@ -54,11 +55,12 @@ class AnuncioServiceTests extends ApplicationTests {
         Long id = anuncioService.crearAnuncio(nuevoAnuncioDto);
         assertThat(JdbcTestUtils.countRowsInTable(jdbcTemplate, "anuncio")).isEqualTo(1);
         assertThat(id).isNotNull();
-        var anuncioPersistido = anuncioRepository.getOne(id);
+        var anuncioPersistido = anuncioRepository.getById(id);
         assertThat(anuncioPersistido.getColores()).hasSize(2);
         assertThat(anuncioPersistido.getNombreMascotaNormalizado()).isEqualTo("SENOR ITATI");
         assertThat(anuncioPersistido.getFechaCreacion()).isCloseTo(LocalDateTime.now(), within(5, SECONDS));
         assertThat(anuncioPersistido.getComentario()).isEqualTo("Tiene una chapita con mi teléfono! Revisar");
+        assertThat(anuncioPersistido.getOrigen()).isEqualTo(OrigenAnuncio.WEB);
     }
 
     @Test
@@ -227,6 +229,7 @@ class AnuncioServiceTests extends ApplicationTests {
                 .localidadId(2)
                 .comentario(" Tiene una chapita con mi teléfono! \n\r Revisar")
                 .telefonoContacto("11-5678-0987")
+                .origen(OrigenAnuncio.WEB)
                 .build();
     }
 

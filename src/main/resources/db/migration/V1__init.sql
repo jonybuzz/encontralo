@@ -47,6 +47,8 @@ CREATE TABLE anuncio (
   comentario VARCHAR(255),
   telefono_contacto VARCHAR(255),
   fecha_creacion DATETIME NOT NULL,
+  origen_id INT,
+  link_externo VARCHAR(500),
   CONSTRAINT anuncio_pk PRIMARY KEY (id),
   CONSTRAINT anuncio_raza_fk FOREIGN KEY (raza_id) REFERENCES raza(id),
   CONSTRAINT anuncio_localidad_fk FOREIGN KEY (localidad_id) REFERENCES localidad(id)

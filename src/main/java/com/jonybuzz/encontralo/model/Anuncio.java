@@ -54,4 +54,9 @@ public class Anuncio {
 
     private LocalDateTime fechaCreacion;
 
+    @Column(name = "origen_id")
+    @Enumerated(EnumType.ORDINAL)
+    private OrigenAnuncio origen;
+
+    private String linkExterno;
 }

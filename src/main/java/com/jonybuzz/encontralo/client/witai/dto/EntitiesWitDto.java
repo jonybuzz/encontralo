@@ -4,43 +4,44 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 @Data
 public class EntitiesWitDto {
     @JsonProperty("especie:especie")
-    private EntityWitDto especie;
+    private List<EntityWitDto> especie;
     @JsonProperty("color:color")
-    private EntityWitDto color;
+    private List<EntityWitDto> color;
     @JsonProperty("edad:edad")
-    private EntityWitDto edad;
+    private List<EntityWitDto> edad;
     @JsonProperty("localidad:localidad")
-    private EntityWitDto localidad;
+    private List<EntityWitDto> localidad;
     @JsonProperty("nombre:nombre")
-    private EntityWitDto nombre;
+    private List<EntityWitDto> nombre;
     @JsonProperty("pelaje:pelaje")
-    private EntityWitDto pelaje;
+    private List<EntityWitDto> pelaje;
     @JsonProperty("raza:raza")
-    private EntityWitDto raza;
+    private List<EntityWitDto> raza;
     @JsonProperty("sexo:sexo")
-    private EntityWitDto sexo;
+    private List<EntityWitDto> sexo;
     @JsonProperty("tamanio:tamanio")
-    private EntityWitDto tamanio;
+    private List<EntityWitDto> tamanio;
     @JsonProperty("tieneCollar:tieneCollar")
-    private EntityWitDto tieneCollar;
+    private List<EntityWitDto> tieneCollar;
     @JsonProperty("wit$datetime:datetime")
-    private DatetimeEntityWitDto datetime;
+    private List<DatetimeEntityWitDto> datetime;
     @JsonProperty("wit$phone_number:phone_number")
-    private EntityWitDto phoneNumber;
+    private List<EntityWitDto> phoneNumber;
     @JsonProperty("wit$email:email")
-    private EntityWitDto email;
+    private List<EntityWitDto> email;
 
     @Data
-    private static class EntityWitDto {
+    public static class EntityWitDto {
         private String value;
     }
 
     @Data
-    private static class DatetimeEntityWitDto {
+    public static class DatetimeEntityWitDto {
         private ZonedDateTime value;
     }
 }

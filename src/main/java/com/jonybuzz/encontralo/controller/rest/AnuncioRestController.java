@@ -3,6 +3,7 @@ package com.jonybuzz.encontralo.controller.rest;
 import com.jonybuzz.encontralo.dto.AnuncioResumidoDto;
 import com.jonybuzz.encontralo.dto.NuevoAnuncioDto;
 import com.jonybuzz.encontralo.model.FiltroAnuncios;
+import com.jonybuzz.encontralo.model.OrigenAnuncio;
 import com.jonybuzz.encontralo.model.TipoAnuncio;
 import com.jonybuzz.encontralo.service.AnuncioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ public class AnuncioRestController {
 
     @PostMapping("/api/anuncios")
     public Long crearAnuncio(@RequestBody @Valid NuevoAnuncioDto nuevoAnuncioDto) {
+        nuevoAnuncioDto.setOrigen(OrigenAnuncio.WEB);
         return anuncioService.crearAnuncio(nuevoAnuncioDto);
     }
 

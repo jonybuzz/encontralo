@@ -10,5 +10,5 @@ public class PostFbDto {
     private String message;
     private String permalinkUrl;
     private ZonedDateTime createdTime;
-    private PostAttachmentFbDto attachment;
+    private PostAttachmentFbDto attachments;
 }
